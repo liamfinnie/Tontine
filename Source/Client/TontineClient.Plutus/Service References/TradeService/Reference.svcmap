@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="56e8323c-9fd8-4560-99b9-5e2cb6251360" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:14771/TradeService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TradeService.disco" MetadataType="Disco" ID="304c8811-07ae-42ae-9fb2-20e121efb508" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?disco" />
+    <MetadataFile FileName="TradeService.xsd" MetadataType="Schema" ID="52217e1e-39b7-4db6-8757-7d1d3eda7c40" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TradeService1.xsd" MetadataType="Schema" ID="4f982aaa-7a13-47f2-aabf-7bbb64ae45b4" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TradeService.wsdl" MetadataType="Wsdl" ID="93cf6fdf-eb1f-454c-a2c1-6ba5aef490cb" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?wsdl" />
+    <MetadataFile FileName="TradeService2.xsd" MetadataType="Schema" ID="34a70b59-23f7-456b-ad6e-aef1e722a9da" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TradeService3.xsd" MetadataType="Schema" ID="55c14d2c-5e20-4d39-8995-f9b43cdba3dc" SourceId="1" SourceUrl="http://localhost:14771/TradeService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

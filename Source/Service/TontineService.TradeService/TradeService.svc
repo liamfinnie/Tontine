@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="TontineService.TradeService.TradeService" CodeBehind="TradeService.svc.cs" %>
