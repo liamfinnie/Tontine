@@ -93,6 +93,12 @@ namespace TontineTest.TradeServiceUnit
             CreateTradeResult createTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
             Assert.AreEqual(expectedNumberOfErrors, createTradeResult.Errors.Count);
             Assert.AreEqual(expectedErrorMessage, createTradeResult.Errors[0]);
+        }
+
+        [Test]
+        public void can_add_update_to_github()
+        {
+            
         } 
 
         private static string GetVanillaIRDSwap()
