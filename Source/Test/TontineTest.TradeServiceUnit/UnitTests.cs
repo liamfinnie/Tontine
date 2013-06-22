@@ -95,12 +95,6 @@ namespace TontineTest.TradeServiceUnit
             Assert.AreEqual(expectedErrorMessage, createTradeResult.Errors[0]);
         }
 
-        [Test]
-        public void can_add_update_to_github()
-        {
-            
-        } 
-
         private static string GetVanillaIRDSwap()
         {
 // ReSharper disable AssignNullToNotNullAttribute
