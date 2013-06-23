@@ -82,7 +82,7 @@ namespace TontineService.TradeService
         private static string ValidateTradeML(string tradeRepresentation)
         {
             var schema = new XmlSchemaSet();
-            schema.Add(null, "../../../../schemas/fpml-main-5-5.xsd");
+            schema.Add(null, "Schemas/fpml-main-5-5.xsd");
             var error = string.Empty;
 
             var document = XDocument.Parse(tradeRepresentation);
