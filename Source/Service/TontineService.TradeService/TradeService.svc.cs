@@ -30,7 +30,7 @@ namespace TontineService.TradeService
 
             if (string.IsNullOrEmpty(sourceApplicationCode))
             {
-                result.Errors.Add("A Source Appplication Id must be provided.");
+                result.Errors.Add("A Source Appplication Code must be provided.");
                 // Fail fast. It may be better to determine all of the possible errors with the given parameters but for 
                 // now we will return to the client as soon as we know the trade will not be created.
                 return result;
