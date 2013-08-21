@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.ServiceModel;
+using System.Windows;
 using TontineClient.Plutus.TradeService;
 
 namespace TontineClient.Plutus
@@ -173,8 +175,16 @@ namespace TontineClient.Plutus
         private void BtnCreateTradeClick(object sender, RoutedEventArgs e)
         {
             var client = new TradeServiceClient();
-            var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text, TxtBoxSourceApplicationId.Text);
-            TxtBoxResults.Text = createTradeResult.Errors.Length > 0 ? createTradeResult.Errors[0] : "no results";
+
+            try
+            {
+                var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text, TxtBoxSourceApplicationId.Text);
+                TxtBoxResults.Text = createTradeResult.Errors.Length > 0 ? createTradeResult.Errors[0] : "no results";
+            }
+            catch (FaultException fe)
+            {
+                TxtBoxResults.Text = fe.Message + ":" + fe.Reason;
+            }
         }
     }
 }

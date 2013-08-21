@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.XPath;
@@ -8,6 +9,7 @@ using TontineModel.DataLayer;
 
 namespace TontineService.TradeService
 {
+    [TradeServiceErrorHandler]
     public class TradeService : ITradeService
     {
         private readonly ITradeDataAccess _tradeDataAccess;

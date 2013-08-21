@@ -74,6 +74,7 @@
     <Compile Include="TradeService.svc.cs">
       <DependentUpon>TradeService.svc</DependentUpon>
     </Compile>
+    <Compile Include="TradeServiceErrorHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
