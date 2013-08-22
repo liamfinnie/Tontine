@@ -178,12 +178,17 @@ namespace TontineClient.Plutus
 
             try
             {
-                var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text, TxtBoxSourceApplicationId.Text);
+                var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text,
+                                                           TxtBoxSourceApplicationId.Text);
                 TxtBoxResults.Text = createTradeResult.Errors.Length > 0 ? createTradeResult.Errors[0] : "no results";
+            }
+            catch (FaultException<InvalidTradeSubmission> invalidTradeSubmission)
+            {
+                TxtBoxResults.Text = invalidTradeSubmission.Detail.Message;
             }
             catch (FaultException fe)
             {
-                TxtBoxResults.Text = fe.Message + ":" + fe.Reason;
+                TxtBoxResults.Text = fe.Message;
             }
         }
     }

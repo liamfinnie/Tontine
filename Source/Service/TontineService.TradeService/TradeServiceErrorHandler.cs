@@ -9,15 +9,14 @@ using System.ServiceModel.Dispatcher;
 namespace TontineService.TradeService
 {
     public class TradeServiceErrorHandler : IErrorHandler
-    {
+    {   
         public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
         {
-            fault = Message.CreateMessage(version,
-                                          FaultCode.CreateSenderFaultCode("GenericFaultCode", "http://www.tontine.com/tradeService"),
-                                          "An error has been encountered trying to process your request. Please try again. If the problem persists contact support@tontine.com.",
-                                          "Error Code : " + 12345,
-                                          ""
-                );
+            if(!(error is FaultException))
+                fault = Message.CreateMessage(version,
+                                              FaultCode.CreateSenderFaultCode("GenericFaultCode", "http://www.tontine.com/tradeService"),
+                                              "An error has been encountered trying to process your request. Please try again. If the problem persists contact support@tontine.com. Error Code : " + 12345,
+                                              "");
         }
 
         public bool HandleError(Exception error)

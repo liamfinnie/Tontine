@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel;
 using NUnit.Framework;
 using TontineModel.DataLayer;
 using TontineService.TradeService;
@@ -24,6 +25,7 @@ namespace TontineTest.TradeServiceIntegration
         }
 
         [Test]
+        [ExpectedException(typeof(FaultException<InvalidTradeSubmission>), ExpectedMessage = "Trade with same trade reference and source application id already exists.")]
         public void cannot_create_trade_with_duplicate_trade_reference_and_source_application_id()
         {
             const string sourceApplicationId = "IntegrationTest";
@@ -35,11 +37,7 @@ namespace TontineTest.TradeServiceIntegration
             var createTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
             Assert.AreEqual(expectedNumberOfErrors, createTradeResult.Errors.Count);
 
-            const int expectedNumberOfErrorsWithDuplicate = 1;
-            const string expectedErrorMessage = "Trade with same trade reference and source application id already exists.";
-            var duplicatecreateTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
-            Assert.AreEqual(expectedNumberOfErrorsWithDuplicate, duplicatecreateTradeResult.Errors.Count);
-            Assert.AreEqual(expectedErrorMessage, duplicatecreateTradeResult.Errors[0]);
+            service.CreateTrade(tradeML, sourceApplicationId);
         } 
 
         [TearDown]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -9,6 +11,13 @@ using TontineModel.DataLayer;
 
 namespace TontineService.TradeService
 {
+    [DataContract]
+    public class InvalidTradeSubmission
+    {
+        [DataMember]
+        public string Message;
+    }
+
     [TradeServiceErrorHandler]
     public class TradeService : ITradeService
     {
@@ -31,38 +40,26 @@ namespace TontineService.TradeService
             var result = new CreateTradeResult();
 
             if (string.IsNullOrEmpty(sourceApplicationCode))
-            {
-                result.Errors.Add("A Source Appplication Code must be provided.");
-                // Fail fast. It may be better to determine all of the possible errors with the given parameters but for 
-                // now we will return to the client as soon as we know the trade will not be created.
-                return result;
-            }
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "A Source Appplication Code must be provided." }
+                    , new FaultReason("A Source Appplication Code must be provided."));
 
             if (string.IsNullOrEmpty(tradeRepresentation))
-            {
-                result.Errors.Add("The trade representation cannot be empty.");
-                return result;
-            }
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "The trade representation cannot be empty." }
+                    , new FaultReason("The trade representation cannot be empty."));
 
             string tradeReference = GetTradeReference(tradeRepresentation);
             if (string.IsNullOrEmpty(tradeReference))
-            {
-                result.Errors.Add("The Trade Id cannot be empty.");
-                return result;
-            }
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "The Trade Id cannot be empty." }
+                    , new FaultReason("The Trade Id cannot be empty."));
 
             if (_tradeDataAccess.IsDuplicateTrade(tradeReference, sourceApplicationCode))
-            {
-                result.Errors.Add("Trade with same trade reference and source application id already exists.");
-                return result;
-            }
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "Trade with same trade reference and source application id already exists." }
+                    , new FaultReason("Trade with same trade reference and source application id already exists."));
 
             string validateTradeRepresentationResult = ValidateTradeML(tradeRepresentation);
             if (!string.IsNullOrEmpty(validateTradeRepresentationResult))
-            {
-                result.Errors.Add("Trade representation is invalid XML: " + validateTradeRepresentationResult);
-                return result;
-            }
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "Trade representation is invalid XML: " + validateTradeRepresentationResult }
+                    , new FaultReason("Trade representation is invalid XML: " + validateTradeRepresentationResult));
 
             _tradeDataAccess.CreateTrade(tradeReference, tradeRepresentation, sourceApplicationCode);
 

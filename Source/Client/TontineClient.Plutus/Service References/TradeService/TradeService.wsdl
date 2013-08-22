@@ -3,6 +3,7 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/TontineService.TradeService" />
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TontineModel.DataLayer" />
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
@@ -14,10 +15,14 @@
   <wsdl:message name="ITradeService_CreateTrade_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateTradeResponse" />
   </wsdl:message>
+  <wsdl:message name="ITradeService_CreateTrade_InvalidTradeSubmissionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/TontineService.TradeService" name="detail" element="q1:InvalidTradeSubmission" />
+  </wsdl:message>
   <wsdl:portType name="ITradeService">
     <wsdl:operation name="CreateTrade">
       <wsdl:input wsaw:Action="http://tempuri.org/ITradeService/CreateTrade" message="tns:ITradeService_CreateTrade_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITradeService/CreateTradeResponse" message="tns:ITradeService_CreateTrade_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ITradeService/CreateTradeInvalidTradeSubmissionFault" name="InvalidTradeSubmissionFault" message="tns:ITradeService_CreateTrade_InvalidTradeSubmissionFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITradeService" type="tns:ITradeService">
@@ -30,6 +35,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="InvalidTradeSubmissionFault">
+        <soap:fault use="literal" name="InvalidTradeSubmissionFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="TradeService">
