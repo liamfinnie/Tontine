@@ -14,6 +14,6 @@
         <TextBox Grid.Row="0" Name="TxtBoxSourceApplicationId" Text="Plutus"></TextBox>
         <TextBox Grid.Row="1" Name="TxtBoxTradeRepresentation" Text="tradeML"></TextBox>
         <Button Grid.Row="2" Name="BtnCreateTrade" Click="BtnCreateTradeClick">Create Trade</Button>
-        <TextBox Grid.Row="3" Name="TxtBoxResults">Results...</TextBox>
+        <TextBox Grid.Row="3" Height="100" TextWrapping="Wrap" Name="TxtBoxResults">Results...</TextBox>
     </Grid>
 </Window>

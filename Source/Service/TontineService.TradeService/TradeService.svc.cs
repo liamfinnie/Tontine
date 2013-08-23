@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Xml;
 using System.Xml.Linq;
@@ -47,6 +46,11 @@ namespace TontineService.TradeService
                 throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "The trade representation cannot be empty." }
                     , new FaultReason("The trade representation cannot be empty."));
 
+            string validateTradeRepresentationResult = ValidateTradeML(tradeRepresentation);
+            if (!string.IsNullOrEmpty(validateTradeRepresentationResult))
+                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "Trade representation is invalid XML: " + validateTradeRepresentationResult }
+                    , new FaultReason("Trade representation is invalid XML: " + validateTradeRepresentationResult));
+
             string tradeReference = GetTradeReference(tradeRepresentation);
             if (string.IsNullOrEmpty(tradeReference))
                 throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "The Trade Id cannot be empty." }
@@ -56,12 +60,9 @@ namespace TontineService.TradeService
                 throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "Trade with same trade reference and source application id already exists." }
                     , new FaultReason("Trade with same trade reference and source application id already exists."));
 
-            string validateTradeRepresentationResult = ValidateTradeML(tradeRepresentation);
-            if (!string.IsNullOrEmpty(validateTradeRepresentationResult))
-                throw new FaultException<InvalidTradeSubmission>(new InvalidTradeSubmission { Message = "Trade representation is invalid XML: " + validateTradeRepresentationResult }
-                    , new FaultReason("Trade representation is invalid XML: " + validateTradeRepresentationResult));
-
             _tradeDataAccess.CreateTrade(tradeReference, tradeRepresentation, sourceApplicationCode);
+
+            result.TradeCreated = true;
 
             return result;
         }   
@@ -77,14 +78,23 @@ namespace TontineService.TradeService
         }
 
         // Assumptions : The only trade type currently valid is vanilla ird swap
-        /// <returns>A string with any raised error message. An empty string indicates validation was succesfull</returns>
+        /// <returns>A string with any raised error message. An empty string indicates validation was successful</returns>
         private static string ValidateTradeML(string tradeRepresentation)
         {
             var schema = new XmlSchemaSet();
             schema.Add(null, "Schemas/fpml-main-5-5.xsd");
             var error = string.Empty;
 
-            var document = XDocument.Parse(tradeRepresentation);
+            XDocument document;
+            try
+            {
+                document = XDocument.Parse(tradeRepresentation);
+            }
+            catch (XmlException xmlException)
+            {
+                return xmlException.Message;
+            }
+
             document.Validate(schema, (o, e) => error = e.Message, true);
       
             return error;

@@ -112,9 +112,6 @@
     <None Include="Service References\TradeService\TradeService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TradeService\TradeService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

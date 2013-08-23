@@ -3,10 +3,9 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/TontineService.TradeService" />
+      <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TontineService.TradeService" />
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TontineModel.DataLayer" />
-      <xsd:import schemaLocation="http://localhost:14771/TradeService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ITradeService_CreateTrade_InputMessage">

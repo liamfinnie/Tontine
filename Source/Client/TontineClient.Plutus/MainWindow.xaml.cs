@@ -180,15 +180,27 @@ namespace TontineClient.Plutus
             {
                 var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text,
                                                            TxtBoxSourceApplicationId.Text);
-                TxtBoxResults.Text = createTradeResult.Errors.Length > 0 ? createTradeResult.Errors[0] : "no results";
+                TxtBoxResults.Text = createTradeResult.TradeCreated ? "trade created" : "trade not created.";
             }
             catch (FaultException<InvalidTradeSubmission> invalidTradeSubmission)
             {
-                TxtBoxResults.Text = invalidTradeSubmission.Detail.Message;
+                TxtBoxResults.Text = "FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message;
             }
             catch (FaultException fe)
             {
-                TxtBoxResults.Text = fe.Message;
+                TxtBoxResults.Text = "Fault Exception : " + fe.Message;
+            }
+            catch (CommunicationException communicationException)
+            {
+                TxtBoxResults.Text = "Communication Exception : " + communicationException.Message;
+            }
+            catch (TimeoutException timeoutException)
+            {
+                TxtBoxResults.Text = "Timeout Exception : " + timeoutException.Message;
+            }
+            catch (Exception ex)
+            {
+                TxtBoxResults.Text = "Exception : " + ex.Message;
             }
         }
     }

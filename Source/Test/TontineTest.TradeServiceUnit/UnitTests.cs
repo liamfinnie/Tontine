@@ -17,13 +17,12 @@ namespace TontineTest.TradeServiceUnit
             var mockTradeDataAccess = MockRepository.GenerateMock<ITradeDataAccess>();
             var tradeML = GetVanillaIRDSwap();
             const string sourceApplicationId = "UnitTest";
-            const int expectedNumberOfErrors = 0;
 
             mockTradeDataAccess.Expect(x => x.CreateTrade("SW2000", tradeML, sourceApplicationId)).Return(true);
             var service = new TradeService(mockTradeDataAccess);
 
             var createTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
-            Assert.AreEqual(expectedNumberOfErrors, createTradeResult.Errors.Count);
+            Assert.IsTrue(createTradeResult.TradeCreated);
         }
 
         [Test]

@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace TontineModel.DataLayer
 {
     public sealed class CreateTradeResult
     {
-        public List<string> Errors { get; set; }
-
-        public CreateTradeResult()
-        {
-            Errors = new List<string>();
-        }
+        public Boolean TradeCreated { get; set; }
     }
 }

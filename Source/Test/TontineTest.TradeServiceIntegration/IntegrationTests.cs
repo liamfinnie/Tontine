@@ -21,7 +21,7 @@ namespace TontineTest.TradeServiceIntegration
             var service = new TradeService(new TradeDataAccess("HermesContext"));
 
             var createTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
-            Assert.IsTrue(createTradeResult.Errors.Count == 0);
+            Assert.IsTrue(createTradeResult.TradeCreated);
         }
 
         [Test]
@@ -33,9 +33,8 @@ namespace TontineTest.TradeServiceIntegration
             tradeML = tradeML.Replace("SW2000", Guid.NewGuid().ToString());
             var service = new TradeService(new TradeDataAccess("HermesContext"));
 
-            const int expectedNumberOfErrors = 0;
             var createTradeResult = service.CreateTrade(tradeML, sourceApplicationId);
-            Assert.AreEqual(expectedNumberOfErrors, createTradeResult.Errors.Count);
+            Assert.IsTrue(createTradeResult.TradeCreated);
 
             service.CreateTrade(tradeML, sourceApplicationId);
         } 

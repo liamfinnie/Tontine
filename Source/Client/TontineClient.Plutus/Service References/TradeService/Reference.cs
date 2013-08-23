@@ -23,7 +23,7 @@ namespace TontineClient.Plutus.TradeService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] ErrorsField;
+        private bool TradeCreatedField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -36,14 +36,14 @@ namespace TontineClient.Plutus.TradeService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] Errors {
+        public bool TradeCreated {
             get {
-                return this.ErrorsField;
+                return this.TradeCreatedField;
             }
             set {
-                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
-                    this.ErrorsField = value;
-                    this.RaisePropertyChanged("Errors");
+                if ((this.TradeCreatedField.Equals(value) != true)) {
+                    this.TradeCreatedField = value;
+                    this.RaisePropertyChanged("TradeCreated");
                 }
             }
         }
