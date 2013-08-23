@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using NLog;
 
 namespace TontineService.TradeService
 {
@@ -21,9 +22,10 @@ namespace TontineService.TradeService
 
         public bool HandleError(Exception error)
         {
-            File.WriteAllText(@"c:\temp\error.txt", "*** TradeServiceErrorHandler.HandleError called."  + Environment.NewLine);
-            File.AppendAllText(@"c:\temp\error.txt", "Error Code : " + 12345 + Environment.NewLine);
-            File.AppendAllText(@"c:\temp\error.txt", error.Message);
+            Logger logger = LogManager.GetLogger("TradeServiceErrorHandler");
+            logger.Error("*** TradeServiceErrorHandler.HandleError called.");
+            logger.Error("Error Code : 12345.");
+            logger.Error(error.Message);
             return true;
         }
     }
