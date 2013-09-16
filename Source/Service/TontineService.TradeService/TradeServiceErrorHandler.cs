@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -14,18 +13,16 @@ namespace TontineService.TradeService
         public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
         {
             if(!(error is FaultException))
-                fault = Message.CreateMessage(version,
-                                              FaultCode.CreateSenderFaultCode("GenericFaultCode", "http://www.tontine.com/tradeService"),
-                                              "An error has been encountered trying to process your request. Please try again. If the problem persists contact support@tontine.com. Error Code : " + 12345,
-                                              "");
+                fault = Message.CreateMessage(version
+                                              , FaultCode.CreateSenderFaultCode("GenericFaultCode", "http://www.tontine.com/tradeService")
+                                              , "An error has been encountered trying to process your request. Please try again. If the problem persists contact support@tontine.com."
+                                              , "http://www.tontine.com/GenericFaultCode");
         }
 
         public bool HandleError(Exception error)
         {
-            Logger logger = LogManager.GetLogger("TradeServiceErrorHandler");
-            logger.Error("*** TradeServiceErrorHandler.HandleError called.");
-            logger.Error("Error Code : 12345.");
-            logger.Error(error.Message);
+            Logger logger = LogManager.GetLogger("TradeService");
+            logger.Error(string.Format("{0}|{1}", (OperationContext.Current.Channel).LocalAddress, error.Message));
             return true;
         }
     }

@@ -21,7 +21,7 @@
     <wsdl:operation name="CreateTrade">
       <wsdl:input wsaw:Action="http://tempuri.org/ITradeService/CreateTrade" message="tns:ITradeService_CreateTrade_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITradeService/CreateTradeResponse" message="tns:ITradeService_CreateTrade_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/ITradeService/CreateTradeInvalidTradeSubmissionFault" name="InvalidTradeSubmissionFault" message="tns:ITradeService_CreateTrade_InvalidTradeSubmissionFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://www.tontine.com/InvalidTradeSubmission" name="InvalidTradeSubmissionFault" message="tns:ITradeService_CreateTrade_InvalidTradeSubmissionFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITradeService" type="tns:ITradeService">

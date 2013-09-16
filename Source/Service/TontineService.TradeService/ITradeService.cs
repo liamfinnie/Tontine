@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using TontineModel.DataLayer;
 
 namespace TontineService.TradeService
@@ -6,7 +7,7 @@ namespace TontineService.TradeService
     [ServiceContract]
     public interface ITradeService
     {
-        [FaultContract(typeof(InvalidTradeSubmission))]
+        [FaultContract(typeof(InvalidTradeSubmission), Action="http://www.tontine.com/InvalidTradeSubmission")]
         [OperationContract]
         CreateTradeResult CreateTrade(string tradeRepresentation, string sourceApplicationCode);
     }

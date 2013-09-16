@@ -108,7 +108,7 @@ namespace TontineClient.Plutus.TradeService {
     public interface ITradeService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITradeService/CreateTrade", ReplyAction="http://tempuri.org/ITradeService/CreateTradeResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(TontineClient.Plutus.TradeService.InvalidTradeSubmission), Action="http://tempuri.org/ITradeService/CreateTradeInvalidTradeSubmissionFault", Name="InvalidTradeSubmission", Namespace="http://schemas.datacontract.org/2004/07/TontineService.TradeService")]
+        [System.ServiceModel.FaultContractAttribute(typeof(TontineClient.Plutus.TradeService.InvalidTradeSubmission), Action="http://www.tontine.com/InvalidTradeSubmission", Name="InvalidTradeSubmission", Namespace="http://schemas.datacontract.org/2004/07/TontineService.TradeService")]
         TontineClient.Plutus.TradeService.CreateTradeResult CreateTrade(string tradeRepresentation, string sourceApplicationCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITradeService/CreateTrade", ReplyAction="http://tempuri.org/ITradeService/CreateTradeResponse")]
