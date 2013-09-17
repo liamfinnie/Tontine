@@ -7,6 +7,8 @@ namespace TontineClient.Plutus
 {
     public partial class MainWindow
     {
+        TradeServiceClient _client = new TradeServiceClient();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -174,12 +176,10 @@ namespace TontineClient.Plutus
 
         private void BtnCreateTradeClick(object sender, RoutedEventArgs e)
         {
-            var client = new TradeServiceClient();
-
             try
             {
-                var createTradeResult = client.CreateTrade(TxtBoxTradeRepresentation.Text,
-                                                           TxtBoxSourceApplicationId.Text);
+                var createTradeResult = _client.CreateTrade(TxtBoxTradeRepresentation.Text,
+                    TxtBoxSourceApplicationId.Text);
                 TxtBoxResults.Text = createTradeResult.TradeCreated ? "trade created" : "trade not created.";
             }
             catch (FaultException<InvalidTradeSubmission> invalidTradeSubmission)
@@ -201,6 +201,14 @@ namespace TontineClient.Plutus
             catch (Exception ex)
             {
                 TxtBoxResults.Text = "Exception : " + ex.Message;
+            }
+            finally
+            {
+                if (_client.State == CommunicationState.Faulted)
+                {
+                    _client.Abort();
+                    _client = new TradeServiceClient();
+                }
             }
         }
     }
