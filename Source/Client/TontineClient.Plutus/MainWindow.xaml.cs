@@ -7,7 +7,7 @@ namespace TontineClient.Plutus
 {
     public partial class MainWindow
     {
-        TradeServiceClient _client = new TradeServiceClient();
+        TradeServiceClient _client = new TradeServiceClient("NetTcpBinding_ITradeService");
 
         public MainWindow()
         {
@@ -207,7 +207,7 @@ namespace TontineClient.Plutus
                 if (_client.State == CommunicationState.Faulted)
                 {
                     _client.Abort();
-                    _client = new TradeServiceClient();
+                    _client = new TradeServiceClient("NetTcpBinding_ITradeService");
                 }
             }
         }

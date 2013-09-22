@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Xml;
 using System.Xml.Linq;
@@ -83,7 +82,7 @@ namespace TontineService.TradeService
         private static string ValidateTradeML(string tradeRepresentation)
         {
             var schema = new XmlSchemaSet();
-            schema.Add(null, "Schemas/fpml-main-5-5.xsd");
+            schema.Add(null, @"C:\Users\liam\Documents\GitHub\Tontine\Source\Service\TontineService.TradeService\Schemas\fpml-main-5-5.xsd");
             var error = string.Empty;
 
             XDocument document;

@@ -22,7 +22,10 @@ namespace TontineService.TradeService
         public bool HandleError(Exception error)
         {
             Logger logger = LogManager.GetLogger("TradeService");
-            logger.Error(string.Format("{0}|{1}", (OperationContext.Current.Channel).LocalAddress, error.Message));
+
+            if(OperationContext.Current != null)
+                logger.Error(string.Format("{0}|{1}", (OperationContext.Current.Channel).LocalAddress, error.Message));
+         
             return true;
         }
     }
