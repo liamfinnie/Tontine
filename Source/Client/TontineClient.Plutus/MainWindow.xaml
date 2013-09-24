@@ -6,14 +6,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-
-        <TextBox Grid.Row="0" Name="TxtBoxSourceApplicationId" Text="Plutus"></TextBox>
-        <TextBox Grid.Row="1" Name="TxtBoxTradeRepresentation" Text="tradeML"></TextBox>
+            
+        <ComboBox Grid.Row="0" Name="CmbBoxBindings"></ComboBox>
+        <TextBox Grid.Row="1" Name="TxtBoxSourceApplicationId" Text="Plutus"></TextBox>
         <Button Grid.Row="2" Name="BtnCreateTrade" Click="BtnCreateTradeClick">Create Trade</Button>
         <TextBox Grid.Row="3" Height="100" TextWrapping="Wrap" Name="TxtBoxResults">Results...</TextBox>
+        <TextBox Grid.Row="4" Name="TxtBoxTradeRepresentation" Text="tradeML"></TextBox>
     </Grid>
 </Window>
