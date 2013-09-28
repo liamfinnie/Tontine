@@ -5,6 +5,8 @@ using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
 using System.Windows;
+using System.Windows.Input;
+using Microsoft.Win32;
 using TontineClient.Plutus.TradeService;
 
 namespace TontineClient.Plutus
@@ -22,15 +24,13 @@ namespace TontineClient.Plutus
         private void PopulateControls()
         {
             PopulateBindings();
-            PopulateTradeML();
+// ReSharper disable once AssignNullToNotNullAttribute
+            PopulateTradeML(new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("TontineClient.Plutus.Resources.vanilla_ird_swap.xml")).ReadToEnd());
         }
 
-        private void PopulateTradeML()
+        private void PopulateTradeML(string tradeML)
         {
-// ReSharper disable AssignNullToNotNullAttribute
-            var vanillaIRDSwap = new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("TontineClient.Plutus.Resources.vanilla_ird_swap.xml")).ReadToEnd();
-// ReSharper restore AssignNullToNotNullAttribute
-            TxtBoxTradeRepresentation.Text = vanillaIRDSwap;
+            TxtBoxTradeRepresentation.Text = tradeML;
         }
 
         private void PopulateBindings()
@@ -82,6 +82,19 @@ namespace TontineClient.Plutus
                     _client.Abort();
                     _client = new TradeServiceClient(CmbBoxBindings.SelectedItem.ToString());
                 }
+            }
+        }
+
+        private void OpenTradeML(object sender, ExecutedRoutedEventArgs e)
+        {
+            FileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = Environment.CurrentDirectory;
+            dialog.Filter = "Trade ML files (*.xml)|*.xml";
+            
+            if(dialog.ShowDialog().Value)
+            {
+                string fileContents = File.ReadAllText(dialog.FileName);
+                PopulateTradeML(fileContents);
             }
         }
     }

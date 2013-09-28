@@ -1,21 +1,46 @@
 ﻿<Window x:Class="TontineClient.Plutus.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Plutus" Height="350" Width="525"
-        WindowState="Maximized">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-            
-        <ComboBox Grid.Row="0" Name="CmbBoxBindings"></ComboBox>
-        <TextBox Grid.Row="1" Name="TxtBoxSourceApplicationId" Text="Plutus"></TextBox>
-        <Button Grid.Row="2" Name="BtnCreateTrade" Click="BtnCreateTradeClick">Create Trade</Button>
-        <TextBox Grid.Row="3" Height="100" TextWrapping="Wrap" Name="TxtBoxResults">Results...</TextBox>
-        <TextBox Grid.Row="4" Name="TxtBoxTradeRepresentation" Text="tradeML"></TextBox>
-    </Grid>
+        Title="Plutus"  Height="800" Width="500" MaxHeight="800"
+        Background="{DynamicResource MainBackgroundBrush}"
+        ResizeMode="NoResize">
+    <Window.Resources>
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenTradeML"/>
+    </Window.CommandBindings>
+    <DockPanel>
+
+        <Border Height="50" DockPanel.Dock="Top" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" x:Name="HeaderBorder" Padding="10,0,10,0" >
+            <DockPanel x:Name="Header" >
+                <TextBlock xml:space="preserve" Opacity="1" FontFamily="Segoe UI" FontSize="24" FontStretch="Normal" FontWeight="Light" TextWrapping="Wrap" Foreground="{DynamicResource HeaderFontColor}" VerticalAlignment="Bottom" Margin="0,0,0,5">Plutus</TextBlock>
+            </DockPanel>
+        </Border>
+
+        <Border x:Name="MenuBorder" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,5,0,5">
+            <Menu VerticalAlignment="Bottom" Margin="5,0,0,0" Style="{DynamicResource MenuStyle}">
+                <MenuItem Header="_Open" Command="Open" x:Name="OpenMenu" Style="{DynamicResource MenuItemStyle}"/>
+            </Menu>
+        </Border>
+
+        <Grid x:Name="MainGrid" Grid.IsSharedSizeScope="True" DockPanel.Dock="Top" >
+            <Grid x:Name="DiagramPane" Margin="10,0,10,10">
+                <Border Background="{DynamicResource MainGridBrush}" Style="{DynamicResource CurvedBorderStyle}" x:Name="DiagramBorder">
+                    <StackPanel Margin="10,0,10,10">
+                        <Label Style="{DynamicResource LabelFontStyle}">Endpoint</Label>
+                        <ComboBox Name="CmbBoxBindings" Width="250" HorizontalAlignment="Left"></ComboBox>
+                        <Label Style="{DynamicResource LabelFontStyle}">Source Application Code</Label>
+                        <TextBox Name="TxtBoxSourceApplicationId" Text="Plutus" Width="100" HorizontalAlignment="Left"></TextBox>
+                        <Button Name="BtnCreateTrade" Style="{StaticResource InformButton}" Click="BtnCreateTradeClick" Margin="0,10,0,10" HorizontalAlignment="Left">Create Trade</Button>
+                        <TextBox Height="100" Width="454" TextWrapping="Wrap" HorizontalAlignment="Left" Name="TxtBoxResults">Results...</TextBox>
+                        <Label Style="{DynamicResource LabelFontStyle}">Trade ML</Label>
+                        <TextBox Name="TxtBoxTradeRepresentation" Text="tradeML" HorizontalAlignment="Left" TextWrapping="Wrap" 
+                                 VerticalScrollBarVisibility="Visible" AcceptsReturn="True" MaxHeight="300" Width="444" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+    </DockPanel>
 </Window>
