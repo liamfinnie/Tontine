@@ -31,7 +31,7 @@
                         <Label Style="{DynamicResource LabelFontStyle}">Endpoint</Label>
                         <ComboBox Name="CmbBoxBindings" Width="250" HorizontalAlignment="Left"></ComboBox>
                         <Label Style="{DynamicResource LabelFontStyle}">Source Application Code</Label>
-                        <TextBox Name="TxtBoxSourceApplicationId" Text="Plutus" Width="100" HorizontalAlignment="Left"></TextBox>
+                        <TextBox Name="TxtBoxSourceApplicationCode" Text="Plutus" Width="100" HorizontalAlignment="Left"></TextBox>
                         <Button Name="BtnCreateTrade" Style="{StaticResource InformButton}" Click="BtnCreateTradeClick" Margin="0,10,0,10" HorizontalAlignment="Left">Create Trade</Button>
                         <TextBox Height="100" Width="454" TextWrapping="Wrap" HorizontalAlignment="Left" Name="TxtBoxResults">Results...</TextBox>
                         <Label Style="{DynamicResource LabelFontStyle}">Trade ML</Label>

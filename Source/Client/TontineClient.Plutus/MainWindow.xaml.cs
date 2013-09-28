@@ -4,10 +4,9 @@ using System.IO;
 using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Microsoft.Win32;
 using TontineClient.Plutus.TradeService;
 
@@ -47,54 +46,52 @@ namespace TontineClient.Plutus
             CmbBoxBindings.SelectedIndex = 0;
         }
 
-        private void SubmitTrade(object state)
+        private async Task SubmitTrade(string sourceApplicationCode, string tradeRepresentation)
         {
             try
             {
-                var details = state as Tuple<string, string>;
-                if (details == null || string.IsNullOrEmpty(details.Item1) || string.IsNullOrEmpty(details.Item2))
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults), "Please provide a Source Application Code and Trade Representation.");
+                if (string.IsNullOrEmpty(sourceApplicationCode) || string.IsNullOrEmpty(tradeRepresentation))
+                    UpdateResult("Please provide a Source Application Code and Trade Representation.");
                 else
                 {
-                    var createTradeResult = _client.CreateTrade(details.Item2, details.Item1);
-
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                        , createTradeResult.TradeCreated ? "Trade created" : "Trade not created.");
+                    Task<CreateTradeResult> task = _client.CreateTradeAsync(tradeRepresentation, sourceApplicationCode);
+                    CreateTradeResult result = await task;
+                    UpdateResult(result.TradeCreated ? "Trade created." : "Trade not created.");
                 }
             }
             catch (FaultException<InvalidTradeSubmission> invalidTradeSubmission)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                    , "FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message);
+                UpdateResult("FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message);
             }
             catch (FaultException fe)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                    , "Fault Exception : " + fe.Message);
+                UpdateResult("Fault Exception : " + fe.Message);
             }
             catch (CommunicationException communicationException)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                    , "Communication Exception : " + communicationException.Message);
+                UpdateResult("Communication Exception : " + communicationException.Message);
             }
             catch (TimeoutException timeoutException)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                    , "Timeout Exception : " + timeoutException.Message);
+                UpdateResult("Timeout Exception : " + timeoutException.Message);
             }
             catch (Exception ex)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
-                    , "Exception : " + ex.Message);
+                UpdateResult("Exception : " + ex.Message);
             }
             finally
             {
                 if (_client.State == CommunicationState.Faulted)
                 {
                     _client.Abort();
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(RecreateClient));
+                    RecreateClient();
                 }
             }
+        }
+
+        private void UpdateResult(string result)
+        {
+            TxtBoxResults.Text = result;
         }
 
         private void RecreateClient()
@@ -102,16 +99,11 @@ namespace TontineClient.Plutus
             _client = new TradeServiceClient(CmbBoxBindings.SelectedItem.ToString());
         }
 
-        private void UpdateResults(string results)
+        private async void BtnCreateTradeClick(object sender, RoutedEventArgs e)
         {
-            TxtBoxResults.Text = results;
-        }
-
-        private void BtnCreateTradeClick(object sender, RoutedEventArgs e)
-        {
+            TxtBoxResults.Clear();
             RecreateClient();
-            var details = new Tuple<string, string>(TxtBoxSourceApplicationId.Text, TxtBoxTradeRepresentation.Text);
-            ThreadPool.QueueUserWorkItem(SubmitTrade, details);
+            await SubmitTrade(TxtBoxSourceApplicationCode.Text, TxtBoxTradeRepresentation.Text);
         }
 
         private void OpenTradeML(object sender, ExecutedRoutedEventArgs e)
