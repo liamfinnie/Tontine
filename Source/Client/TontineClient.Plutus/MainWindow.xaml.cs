@@ -4,8 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Microsoft.Win32;
 using TontineClient.Plutus.TradeService;
 
@@ -45,44 +47,71 @@ namespace TontineClient.Plutus
             CmbBoxBindings.SelectedIndex = 0;
         }
 
-        private void BtnCreateTradeClick(object sender, RoutedEventArgs e)
+        private void SubmitTrade(object state)
         {
-            _client = new TradeServiceClient(CmbBoxBindings.SelectedItem.ToString());
-
             try
             {
-                var createTradeResult = _client.CreateTrade(TxtBoxTradeRepresentation.Text,
-                    TxtBoxSourceApplicationId.Text);
-                TxtBoxResults.Text = createTradeResult.TradeCreated ? "trade created" : "trade not created.";
+                var details = state as Tuple<string, string>;
+                if (details == null || string.IsNullOrEmpty(details.Item1) || string.IsNullOrEmpty(details.Item2))
+                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults), "Please provide a Source Application Code and Trade Representation.");
+                else
+                {
+                    var createTradeResult = _client.CreateTrade(details.Item2, details.Item1);
+
+                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                        , createTradeResult.TradeCreated ? "Trade created" : "Trade not created.");
+                }
             }
             catch (FaultException<InvalidTradeSubmission> invalidTradeSubmission)
             {
-                TxtBoxResults.Text = "FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message;
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                    , "FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message);
             }
             catch (FaultException fe)
             {
-                TxtBoxResults.Text = "Fault Exception : " + fe.Message;
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                    , "Fault Exception : " + fe.Message);
             }
             catch (CommunicationException communicationException)
             {
-                TxtBoxResults.Text = "Communication Exception : " + communicationException.Message;
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                    , "Communication Exception : " + communicationException.Message);
             }
             catch (TimeoutException timeoutException)
             {
-                TxtBoxResults.Text = "Timeout Exception : " + timeoutException.Message;
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                    , "Timeout Exception : " + timeoutException.Message);
             }
             catch (Exception ex)
             {
-                TxtBoxResults.Text = "Exception : " + ex.Message;
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action<string>(UpdateResults)
+                    , "Exception : " + ex.Message);
             }
             finally
             {
                 if (_client.State == CommunicationState.Faulted)
                 {
                     _client.Abort();
-                    _client = new TradeServiceClient(CmbBoxBindings.SelectedItem.ToString());
+                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(RecreateClient));
                 }
             }
+        }
+
+        private void RecreateClient()
+        {
+            _client = new TradeServiceClient(CmbBoxBindings.SelectedItem.ToString());
+        }
+
+        private void UpdateResults(string results)
+        {
+            TxtBoxResults.Text = results;
+        }
+
+        private void BtnCreateTradeClick(object sender, RoutedEventArgs e)
+        {
+            RecreateClient();
+            var details = new Tuple<string, string>(TxtBoxSourceApplicationId.Text, TxtBoxTradeRepresentation.Text);
+            ThreadPool.QueueUserWorkItem(SubmitTrade, details);
         }
 
         private void OpenTradeML(object sender, ExecutedRoutedEventArgs e)

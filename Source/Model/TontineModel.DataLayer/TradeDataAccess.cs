@@ -12,14 +12,14 @@ namespace TontineModel.DataLayer
             _nameOrConnectionString = nameOrConnectionString;
         }
 
-        public bool CreateTrade(string tradeReference, string tradeRepresentation, string sourceApplicationId)
+        public bool CreateTrade(string tradeReference, string tradeRepresentation, string sourceApplicationCode)
         {
             var context = new HermesContext(_nameOrConnectionString);
             context.StagingTrades.Add(new StagingTrade
             {
                 TradeReference = tradeReference,
                 TradeRepresentation = tradeRepresentation,
-                SourceApplicationId = sourceApplicationId
+                SourceApplicationCode = sourceApplicationCode
             });
 
             context.SaveChanges();
@@ -32,7 +32,7 @@ namespace TontineModel.DataLayer
             var context = new HermesContext(_nameOrConnectionString);
             var trade = (from s in context.StagingTrades
                          where s.TradeReference == tradeReference
-                         && s.SourceApplicationId == sourceApplicationCode
+                         && s.SourceApplicationCode == sourceApplicationCode
                          select s).FirstOrDefault();
 
             return trade != null;

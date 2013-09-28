@@ -18,7 +18,7 @@ namespace TontineModel.DataLayer
             modelBuilder.Entity<StagingTrade>().Property(c => c.TradeReference).HasColumnName("trade_reference");
             modelBuilder.Entity<StagingTrade>().Property(c => c.TradeRepresentation).HasColumnName("trade_representation");
             modelBuilder.Entity<StagingTrade>().Property(c => c.TradeRepresentation).HasColumnType("XML");
-            modelBuilder.Entity<StagingTrade>().Property(c => c.SourceApplicationId).HasColumnName("source_application_id");
+            modelBuilder.Entity<StagingTrade>().Property(c => c.SourceApplicationCode).HasColumnName("source_application_code");
             modelBuilder.Entity<StagingTrade>().Property(c => c.CreatedDate).HasColumnName("created_date");
             modelBuilder.Entity<StagingTrade>().Property(c => c.CreatedDate).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
             
