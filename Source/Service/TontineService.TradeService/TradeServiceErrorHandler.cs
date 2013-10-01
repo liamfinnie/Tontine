@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using System.Text;
 using NLog;
 
 namespace TontineService.TradeService
@@ -23,9 +24,30 @@ namespace TontineService.TradeService
         {
             Logger logger = LogManager.GetLogger("TradeService");
 
-            if(OperationContext.Current != null)
-                logger.Error(string.Format("{0}|{1}", (OperationContext.Current.Channel).LocalAddress, error.Message));
-         
+            if (OperationContext.Current != null)
+            {
+                Exception currentException = error;
+                var consolidatedErrors = new StringBuilder();
+
+                while (currentException != null)
+                {
+                    consolidatedErrors.Append(currentException.Message);
+                    consolidatedErrors.Append(string.Format(" ({0})", currentException.GetType()));
+                    consolidatedErrors.Append(currentException.StackTrace);
+                    
+                    if (currentException.InnerException != null)
+                    {
+                        consolidatedErrors.Append(" --> ");
+                        currentException = currentException.InnerException;
+                    }
+                    else
+                        break;
+                }
+
+                logger.Error(string.Format("{0}|{1}", (OperationContext.Current.Channel).LocalAddress, consolidatedErrors));
+
+            }
+
             return true;
         }
     }
