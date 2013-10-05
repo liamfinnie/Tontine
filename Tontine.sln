@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{BDA869ED-D2C2-4F00-A50B-FA2EA1FC7605}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{C9459283-A89A-486A-836A-A956B56CD324}"
@@ -37,6 +39,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontineTest.TradeServiceIntegration", "Source\Test\TontineTest.TradeServiceIntegration\TontineTest.TradeServiceIntegration.csproj", "{40E1B3AD-883C-4A18-A3F9-3EF1600A959E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontineTest.TradeServiceUnit", "Source\Test\TontineTest.TradeServiceUnit\TontineTest.TradeServiceUnit.csproj", "{911DA11F-58B5-44E9-9F18-2635AB0D6768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontineService.CountryReferenceData", "Source\Service\TontineService.CountryReferenceData\TontineService.CountryReferenceData.csproj", "{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +80,10 @@ Global
 		{911DA11F-58B5-44E9-9F18-2635AB0D6768}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{911DA11F-58B5-44E9-9F18-2635AB0D6768}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{911DA11F-58B5-44E9-9F18-2635AB0D6768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +99,7 @@ Global
 		{889A5503-31F8-4E88-A458-C71690ED14EF} = {80EE9A51-6E61-470F-BA8D-935689E58A66}
 		{74633E29-AC94-4B5F-A74F-CBC016CA6096} = {80EE9A51-6E61-470F-BA8D-935689E58A66}
 		{D327F39A-0DEF-4264-8F45-1CB238949137} = {BDA869ED-D2C2-4F00-A50B-FA2EA1FC7605}
+		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF} = {BDA869ED-D2C2-4F00-A50B-FA2EA1FC7605}
 		{40E1B3AD-883C-4A18-A3F9-3EF1600A959E} = {11DC1673-E430-476A-9BBC-AD99C921AD3B}
 		{911DA11F-58B5-44E9-9F18-2635AB0D6768} = {11DC1673-E430-476A-9BBC-AD99C921AD3B}
 		{97963E40-F567-43E3-AB80-5F6C11F0CA96} = {630E4E92-DD37-4815-B117-7A191F91AE39}
