@@ -46,7 +46,7 @@ namespace TontineClient.Plutus
             CmbBoxBindings.SelectedIndex = 0;
         }
 
-        private async Task SubmitTrade(string sourceApplicationCode, string tradeRepresentation)
+        private async Task SubmitTradeAsync(string sourceApplicationCode, string tradeRepresentation)
         {
             try
             {
@@ -54,8 +54,7 @@ namespace TontineClient.Plutus
                     UpdateResult("Please provide a Source Application Code and Trade Representation.");
                 else
                 {
-                    Task<CreateTradeResult> task = _client.CreateTradeAsync(tradeRepresentation, sourceApplicationCode);
-                    CreateTradeResult result = await task;
+                    CreateTradeResult result = await _client.CreateTradeAsync(tradeRepresentation, sourceApplicationCode);
                     UpdateResult(result.TradeCreated ? "Trade created." : "Trade not created.");
                 }
             }
@@ -63,9 +62,9 @@ namespace TontineClient.Plutus
             {
                 UpdateResult("FaultException<InvalidTradeSubmission> : " + invalidTradeSubmission.Detail.Message);
             }
-            catch (FaultException fe)
+            catch (FaultException faultException)
             {
-                UpdateResult("Fault Exception : " + fe.Message);
+                UpdateResult("Fault Exception : " + faultException.Message);
             }
             catch (CommunicationException communicationException)
             {
@@ -75,9 +74,9 @@ namespace TontineClient.Plutus
             {
                 UpdateResult("Timeout Exception : " + timeoutException.Message);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                UpdateResult("Exception : " + ex.Message);
+                UpdateResult("Exception : " + exception.Message);
             }
             finally
             {
@@ -103,7 +102,7 @@ namespace TontineClient.Plutus
         {
             TxtBoxResults.Clear();
             RecreateClient();
-            await SubmitTrade(TxtBoxSourceApplicationCode.Text, TxtBoxTradeRepresentation.Text);
+            await SubmitTradeAsync(TxtBoxSourceApplicationCode.Text, TxtBoxTradeRepresentation.Text);
         }
 
         private void OpenTradeML(object sender, ExecutedRoutedEventArgs e)
