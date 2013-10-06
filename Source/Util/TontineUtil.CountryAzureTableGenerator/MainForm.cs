@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -52,8 +53,20 @@ namespace TontineUtil.CountryAzureTableGenerator
                 }
                 catch (Exception ex)
                 {
+                    if (InvokeRequired)
+                    {
+                        BeginInvoke((MethodInvoker) (() => MessageBox.Show(string.Format("{0}:{1}", columns[0], ex.Message))));
+                        return;
+                    }
+
                     MessageBox.Show(string.Format("{0}:{1}", columns[0], ex.Message));
                 }
+            }
+
+            if (InvokeRequired)
+            {
+                BeginInvoke((MethodInvoker) (() => MessageBox.Show(@"Completed.")));
+                return;
             }
 
             MessageBox.Show(@"Completed.");
@@ -61,7 +74,8 @@ namespace TontineUtil.CountryAzureTableGenerator
 
         private void btnGenerateCountries_Click(object sender, EventArgs e)
         {
-            GenerateCountries();
+            var t = new Thread(GenerateCountries);
+            t.Start();
         }
 
         private void btnGetCountriesInRegion_Click(object sender, EventArgs e)
