@@ -65,32 +65,52 @@ namespace TontineUtil.CountryAzureTableGenerator
 
             if (InvokeRequired)
             {
-                BeginInvoke((MethodInvoker) (() => MessageBox.Show(@"Completed.")));
-                return;
+                BeginInvoke((MethodInvoker)(delegate { btnGenerateCountries.Enabled = true; MessageBox.Show(@"Completed."); }));
             }
-
-            MessageBox.Show(@"Completed.");
+            else
+            {
+                btnGenerateCountries.Enabled = true;
+                MessageBox.Show(@"Completed.");
+            }
         }
 
-        private void btnGenerateCountries_Click(object sender, EventArgs e)
+        private void GetCountriesInRegion()
         {
-            var t = new Thread(GenerateCountries);
-            t.Start();
-        }
-
-        private void btnGetCountriesInRegion_Click(object sender, EventArgs e)
-        {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
             CloudTable table = tableClient.GetTableReference("country");
 
-            TableQuery<Country> query = new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, txtBoxRegion.Text));
+            TableQuery<Country> query =
+                new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
+                    txtBoxRegion.Text));
 
-            listBoxCountriesInRegion.Items.Clear();
             foreach (Country entity in table.ExecuteQuery(query))
-                listBoxCountriesInRegion.Items.Add(entity.RowKey);
+            {
+                if (InvokeRequired)
+                {
+                    Country country = entity;
+                    BeginInvoke((MethodInvoker) (() => listBoxCountriesInRegion.Items.Add(country.RowKey)));
+                }
+                else
+                    listBoxCountriesInRegion.Items.Add(entity.RowKey);
+            }
+        }
+        
+        private void btnGenerateCountries_Click(object sender, EventArgs e)
+        {
+            btnGenerateCountries.Enabled = false;
+            var thread = new Thread(GenerateCountries);
+            thread.Start();
+        }
+
+        private void btnGetCountriesInRegion_Click(object sender, EventArgs e)
+        {
+            listBoxCountriesInRegion.Items.Clear();
+            var thread = new Thread(GetCountriesInRegion);
+            thread.Start();
         }
     }
 }
