@@ -11,13 +11,22 @@ namespace TontineService.CountryReferenceData.Controllers
     public class CountriesController : ApiController
     {
         // GET api/countries
-        public IEnumerable<string> Get()
+        public IEnumerable<Country> Get()
         {
-            return new[] { "value1", "value2" };
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            var query = new TableQuery<Country>();
+            
+            return table.ExecuteQuery(query).ToList();
         }
 
-        // GET api/countries/Spain
-        public Country Get(string id)
+        // GET api/countries/Afghanistan
+        public Country Get(string countryName)
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("StorageConnectionString"));
@@ -28,7 +37,7 @@ namespace TontineService.CountryReferenceData.Controllers
             
             TableQuery<Country> query =
                 new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey",
-                    QueryComparisons.Equal, id));
+                    QueryComparisons.Equal, countryName));
 
             return table.ExecuteQuery(query).First();
         }
@@ -38,13 +47,13 @@ namespace TontineService.CountryReferenceData.Controllers
         {
         }
 
-        // PUT api/countries/5
-        public void Put(int id, [FromBody]string value)
+        // PUT api/countries/Afghanistan
+        public void Put(string countryName, [FromBody]string value)
         {
         }
 
-        // DELETE api/countries/5
-        public void Delete(int id)
+        // DELETE api/countries/Afghanistan
+        public void Delete(string countryName)
         {
         }
     }
