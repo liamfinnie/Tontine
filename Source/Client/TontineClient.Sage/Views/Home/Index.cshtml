@@ -1,0 +1,44 @@
+﻿<div id="body">
+    <section class="content-wrapper main-content clear-fix">
+        <div>
+            <h2>Countries</h2>
+            <ul id="countries" />
+        </div>
+        <div>
+            <h2>Search by Country Name</h2>
+            <input type="text" id="countryName" size="5" />
+            <input type="button" value="Search" onclick="find();" />
+            <p id="country" />
+        </div>
+    </section>
+    
+    <div id="images"></div>
+</div>
+
+@section scripts {
+    <script>
+        var apiUrl = "http://bastion.azurewebsites.net/api/countries/";
+        //var apiUrl = "http://localhost:7475/api/countries/";
+        
+        function formatItem(item) {
+            return item.numberCode + ':'
+                + item.rowKey + ':'
+                + item.alpha2Code + ':'
+                + item.alpha3Code + ':'
+                + item.capital + ':'
+                + item.partitionKey + ':'
+                + item.currencyAlpha3Code;
+        }
+
+        function find() {
+            var id = $('#countryName').val();
+            $.getJSON(apiUrl + id + "/?callback=?")
+                .done(function(data) {
+                    $('#country').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                $('#country').text('Error1: ' + textStatus + ":" + err);
+            });
+        }
+    </script>
+}
