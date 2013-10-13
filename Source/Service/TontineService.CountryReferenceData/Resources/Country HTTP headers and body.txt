@@ -1,0 +1,19 @@
+{"numberCode":999,"alpha2Code":"ZM","alpha3Code":"ZMD","capital":"Zamunda City","currencyAlpha3Code":"ZDL","flag":"","partitionKey":"Africa","rowKey":"Zamunda"}
+
+User-Agent: Fiddler
+Host: localhost:7475
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Content-Type: application/json
+Content-Length: 162
+
+User-Agent: Fiddler
+Host: localhost:7475
+Accept: application/json
+Content-Type: application/json
+Content-Length: 162
+
+POST
+http://localhost:7475/api/countries
+
+PUT
+http://localhost:7475/api/countries/Zamunda

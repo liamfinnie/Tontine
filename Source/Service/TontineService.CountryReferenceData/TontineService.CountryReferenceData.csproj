@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Resources\Country HTTP headers and body.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
