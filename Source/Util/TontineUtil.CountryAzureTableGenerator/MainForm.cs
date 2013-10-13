@@ -164,9 +164,9 @@ namespace TontineUtil.CountryAzureTableGenerator
                     Alpha3Code = txtBoxNewAlpha3Code.Text,
                     Capital = txtBoxNewCapital.Text,
                     CurrencyAlpha3Code = txtBoxNewCurrecyAlpha3Code.Text,
-                //    Flag = File.Exists(@"Resources\flags\" + columns[2] + ".png")
-                //        ? File.ReadAllBytes(@"Resources\flags\" + columns[2] + ".png")
-                //        : null
+                    Flag = File.Exists(@"Resources\flags\" + txtBoxNewAlpha3Code.Text + ".png")
+                        ? File.ReadAllBytes(@"Resources\flags\" + txtBoxNewAlpha3Code.Text + ".png")
+                        : null
                 };
 
                 // Create the TableOperation that inserts the customer entity.
@@ -179,6 +179,8 @@ namespace TontineUtil.CountryAzureTableGenerator
             {
                 MessageBox.Show(ex.ToString());
             }
+
+            MessageBox.Show(txtBoxNewCountryName.Text + @" added.");
         }
     }
 }
