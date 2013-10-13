@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
@@ -43,13 +46,40 @@ namespace TontineService.CountryReferenceData.Controllers
         }
 
         // POST api/countries
-        public void Post([FromBody]string value)
+        public HttpResponseMessage Post([FromBody] Country country)
         {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            TableOperation insertOperation = TableOperation.InsertOrMerge(country);
+
+            table.Execute(insertOperation);
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, country);
+            string uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.RowKey);
+            response.Headers.Location = new Uri(uri);
+            return response;
         }
 
         // PUT api/countries/Afghanistan
-        public void Put(string countryName, [FromBody]string value)
+        public HttpResponseMessage Put(string countryName, [FromBody] Country country)
         {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            TableOperation insertOperation = TableOperation.InsertOrMerge(country);
+
+            table.Execute(insertOperation);
+
+            return new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
         }
 
         // DELETE api/countries/Afghanistan

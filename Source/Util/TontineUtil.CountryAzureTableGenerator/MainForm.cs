@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -111,6 +114,71 @@ namespace TontineUtil.CountryAzureTableGenerator
             listBoxCountriesInRegion.Items.Clear();
             var thread = new Thread(GetCountriesInRegion);
             thread.Start();
+        }
+
+        private void btnGetCountry_Click(object sender, EventArgs e)
+        {
+            CloudStorageAccount storageAccount =
+            CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            TableQuery<Country> query =
+                new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal,
+                    txtBoxCountryName.Text));
+
+            var country = table.ExecuteQuery(query).FirstOrDefault();
+
+            if (country != null)
+            {
+                lblCountryName.Text = country.RowKey;
+                lblRegion.Text = country.PartitionKey;
+                lblNumberCode.Text = country.NumberCode.ToString(CultureInfo.InvariantCulture);
+                lblAlpha2Code.Text = country.Alpha2Code;
+                lblAlpha3Code.Text = country.Alpha3Code;
+                lblCapital.Text = country.Capital;
+                lblCurrencyAlpha3Code.Text = country.CurrencyAlpha3Code;
+                picBoxFlag.Image = (Bitmap)new ImageConverter().ConvertFrom(country.Flag);
+            }
+        }
+
+        private void btnAddCountry_Click(object sender, EventArgs e)
+        {
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+            
+            try
+            {
+                var country = new Country
+                {
+                    RowKey = txtBoxNewCountryName.Text,
+                    PartitionKey = txtBoxNewRegion.Text,
+                    NumberCode = int.Parse(txtBoxNewNumberCode.Text),
+                    Alpha2Code = txtBoxNewAlpha2Code.Text,
+                    Alpha3Code = txtBoxNewAlpha3Code.Text,
+                    Capital = txtBoxNewCapital.Text,
+                    CurrencyAlpha3Code = txtBoxNewCurrecyAlpha3Code.Text,
+                //    Flag = File.Exists(@"Resources\flags\" + columns[2] + ".png")
+                //        ? File.ReadAllBytes(@"Resources\flags\" + columns[2] + ".png")
+                //        : null
+                };
+
+                // Create the TableOperation that inserts the customer entity.
+                TableOperation insertOperation = TableOperation.InsertOrMerge(country);
+
+                // Execute the insert operation.
+                table.Execute(insertOperation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
