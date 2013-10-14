@@ -17,3 +17,10 @@ http://localhost:7475/api/countries
 
 PUT
 http://localhost:7475/api/countries/Zamunda
+
+DELETE
+http://localhost:7475/api/countries/Zamunda
+DELETE http://localhost:7475/api/countries/Zamunda HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:7475
+

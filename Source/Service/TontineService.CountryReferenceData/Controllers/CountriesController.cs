@@ -42,7 +42,7 @@ namespace TontineService.CountryReferenceData.Controllers
                 new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey",
                     QueryComparisons.Equal, countryName));
 
-            return table.ExecuteQuery(query).First();
+            return table.ExecuteQuery(query).FirstOrDefault();
         }
 
         // POST api/countries
@@ -85,6 +85,22 @@ namespace TontineService.CountryReferenceData.Controllers
         // DELETE api/countries/Afghanistan
         public void Delete(string countryName)
         {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            var country = Get(countryName);
+            if (country != null)
+            {
+                country.ETag = "*";
+
+                TableOperation deleteOperation = TableOperation.Delete(country);
+
+                table.Execute(deleteOperation);
+            }
         }
     }
 }

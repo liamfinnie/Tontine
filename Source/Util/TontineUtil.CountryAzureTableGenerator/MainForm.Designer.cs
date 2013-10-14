@@ -51,6 +51,9 @@
             this.txtBoxNewAlpha3Code = new System.Windows.Forms.TextBox();
             this.txtBoxNewAlpha2Code = new System.Windows.Forms.TextBox();
             this.txtBoxNewCapital = new System.Windows.Forms.TextBox();
+            this.btnDeleteCountry = new System.Windows.Forms.Button();
+            this.txtBoxDeleteCountryName = new System.Windows.Forms.TextBox();
+            this.txtBoxDeleteRegion = new System.Windows.Forms.TextBox();
             this.grpBoxCountry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxFlag)).BeginInit();
             this.SuspendLayout();
@@ -263,11 +266,40 @@
             this.txtBoxNewCapital.TabIndex = 15;
             this.txtBoxNewCapital.Text = "Zamunda City";
             // 
+            // btnDeleteCountry
+            // 
+            this.btnDeleteCountry.Location = new System.Drawing.Point(256, 237);
+            this.btnDeleteCountry.Name = "btnDeleteCountry";
+            this.btnDeleteCountry.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteCountry.TabIndex = 16;
+            this.btnDeleteCountry.Text = "Delete Country";
+            this.btnDeleteCountry.UseVisualStyleBackColor = true;
+            this.btnDeleteCountry.Click += new System.EventHandler(this.btnDeleteCountry_Click);
+            // 
+            // txtBoxDeleteCountryName
+            // 
+            this.txtBoxDeleteCountryName.Location = new System.Drawing.Point(256, 265);
+            this.txtBoxDeleteCountryName.Name = "txtBoxDeleteCountryName";
+            this.txtBoxDeleteCountryName.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxDeleteCountryName.TabIndex = 17;
+            this.txtBoxDeleteCountryName.Text = "Zamunda";
+            // 
+            // txtBoxDeleteRegion
+            // 
+            this.txtBoxDeleteRegion.Location = new System.Drawing.Point(256, 291);
+            this.txtBoxDeleteRegion.Name = "txtBoxDeleteRegion";
+            this.txtBoxDeleteRegion.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxDeleteRegion.TabIndex = 18;
+            this.txtBoxDeleteRegion.Text = "Africa";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 461);
+            this.Controls.Add(this.txtBoxDeleteRegion);
+            this.Controls.Add(this.txtBoxDeleteCountryName);
+            this.Controls.Add(this.btnDeleteCountry);
             this.Controls.Add(this.txtBoxNewCapital);
             this.Controls.Add(this.txtBoxNewCurrecyAlpha3Code);
             this.Controls.Add(this.txtBoxNewAlpha3Code);
@@ -318,6 +350,9 @@
         private System.Windows.Forms.TextBox txtBoxNewAlpha3Code;
         private System.Windows.Forms.TextBox txtBoxNewAlpha2Code;
         private System.Windows.Forms.TextBox txtBoxNewCapital;
+        private System.Windows.Forms.Button btnDeleteCountry;
+        private System.Windows.Forms.TextBox txtBoxDeleteCountryName;
+        private System.Windows.Forms.TextBox txtBoxDeleteRegion;
     }
 }
 

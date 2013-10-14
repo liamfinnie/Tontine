@@ -182,5 +182,35 @@ namespace TontineUtil.CountryAzureTableGenerator
 
             MessageBox.Show(txtBoxNewCountryName.Text + @" added.");
         }
+
+        private void btnDeleteCountry_Click(object sender, EventArgs e)
+        {
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+
+            CloudTable table = tableClient.GetTableReference("country");
+
+            try
+            {
+                var country = new Country
+                {
+                    RowKey = txtBoxDeleteCountryName.Text,
+                    PartitionKey = txtBoxDeleteRegion.Text,
+                    ETag = "*"
+                };
+
+                TableOperation deleteOperation = TableOperation.Delete(country);
+
+                table.Execute(deleteOperation);
+
+                MessageBox.Show(txtBoxNewCountryName.Text + @" deleted.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
