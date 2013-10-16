@@ -1,44 +1,132 @@
 ﻿<div id="body">
     <section class="content-wrapper main-content clear-fix">
         <div>
-            <h2>Countries</h2>
-            <ul id="countries" />
+            <h1>Countries</h1>
         </div>
         <div>
-            <h2>Search by Country Name</h2>
-            <input type="text" id="countryName" size="5" />
-            <input type="button" value="Search" onclick="find();" />
-            <p id="country" />
+            <input type="text" id="countryName" size="5" value="Zamunda" />
+            <input type="button" id="btnGetCountry" value="Search by Country Name" />
+            <div id="countryDetails">
+                <p id="countryAsString"></p>
+                <img id="countryFlag" alt="Country Flag should be here." />
+            </div>
+        </div>
+        
+        <br /><br /><br /> 
+       
+        <div>
+            <input type="text" id="newCountryName" size="5" value="Zamunda" />
+            <input type="text" id="newRegion" size="5" value="Africa" /> 
+            <input type="text" id="newNumberCode" size="5" value="990" />
+            <input type="text" id="newAlpha2Code" size="5" value="ZM" />
+            <input type="text" id="newAlpha3Code" size="5" value="ZMD" />
+            <input type="text" id="newCapital" size="5" value="Zamunda City" />
+            <input type="text" id="newCurrencyAlpha3Code" size="5" value="ZDL" />
+            <input type="button" value="Update Country" onclick="putCountry();" />
+            <input type="button" value="Add New Country" onclick="postCountry();" />
+            <input type="button" value="Delete Country" onclick="deleteCountry();" />
         </div>
     </section>
-    
-    <div id="images"></div>
 </div>
 
 @section scripts {
     <script>
         var apiUrl = "http://bastion.azurewebsites.net/api/countries/";
         //var apiUrl = "http://localhost:7475/api/countries/";
-        
+
         function formatItem(item) {
-            return item.numberCode + ':'
-                + item.rowKey + ':'
-                + item.alpha2Code + ':'
-                + item.alpha3Code + ':'
-                + item.capital + ':'
-                + item.partitionKey + ':'
-                + item.currencyAlpha3Code;
+            return 'Number Code:' + item.numberCode
+                + ', Country Name:' + item.rowKey
+                + ', Alpha2Code:' + item.alpha2Code
+                + ', Alpha3Code:' + item.alpha3Code
+                + ', Capital:' + item.capital
+                + ', Region:' + item.partitionKey
+                + ', CurrencyAlpha3Code:' + item.currencyAlpha3Code;
         }
 
-        function find() {
+        $("#btnGetCountry").click(function() {
             var id = $('#countryName').val();
             $.getJSON(apiUrl + id + "/?callback=?")
                 .done(function(data) {
-                    $('#country').text(formatItem(data));
+                    if (data == null) {
+                        $('#countryAsString').text("Country not found.");
+                    } else {
+                        $('#countryAsString').text(formatItem(data));
+                        document.getElementById('countryFlag').src = "data:image/png;base64," + data.flag;                    }
                 })
-                .fail(function (jqXHR, textStatus, err) {
-                $('#country').text('Error1: ' + textStatus + ":" + err);
-            });
+                .fail(function(jqXHR, textStatus, err) {
+                    $('#countryAsString').text('Error1: ' + textStatus + ":" + err);
+                });
+        });
+
+        function putCountry() {
+            var jData = {};
+            jData.RowKey = $('#newCountryName').val(),
+            jData.PartitionKey = $('#newRegion').val(),
+            jData.NumberCode = $('#newNumberCode').val(),
+            jData.Alpha2Code = $('#newAlpha2Code').val(),
+            jData.Alpha3Code = $('#newAlpha3Code').val(),
+            jData.Capital = $('#newCapital').val(),
+            jData.CurrencyAlpha3Code = $('#newCurrencyAlpha3Code').val(),
+            $.ajax({
+                cache: false,
+                type: "PUT",
+                async: false,
+                url: "http://localhost:7475/api/countries/Zamunda",
+                data: JSON.stringify(jData),
+                contentType: "application/json",
+                dataType: "json"
+            })
+                .done(function(country, textStatus, request) {
+                    //alert(request.getAllResponseHeaders());
+                    alert(textStatus);
+                })
+                .fail(function(xhr) {
+                    alert(xhr.responseText);
+                });
         }
+
+        function postCountry() {
+            var jData = {};
+            jData.RowKey = $('#newCountryName').val(),
+            jData.PartitionKey = $('#newRegion').val(),
+            jData.NumberCode = $('#newNumberCode').val(),
+            jData.Alpha2Code = $('#newAlpha2Code').val(),
+            jData.Alpha3Code = $('#newAlpha3Code').val(),
+            jData.Capital = $('#newCapital').val(),
+            jData.CurrencyAlpha3Code = $('#newCurrencyAlpha3Code').val(),            
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                async: false,
+                url: "http://localhost:7475/api/countries",
+                data: JSON.stringify(jData),
+                contentType: "application/json",
+                dataType: "json"
+            })
+                .done(function(country, textStatus, request) {
+                    alert(textStatus);
+                })
+                .fail(function(xhr) {
+                    alert(xhr.responseText);
+                });
+        }
+
+        function deleteCountry() {
+            $.ajax({
+                cache: false,
+                type: "DELETE",
+                async: false,
+                url: "http://localhost:7475/api/countries/" + $('#newCountryName').val(),
+            })
+                .done(function(country, textStatus, request) {
+                    alert(textStatus);
+                })
+                .fail(function(xhr) {
+                    alert(xhr.responseText);
+                });
+        }
+
     </script>
 }
