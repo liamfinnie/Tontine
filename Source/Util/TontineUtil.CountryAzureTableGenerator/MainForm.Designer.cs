@@ -88,6 +88,7 @@
             // 
             // txtBoxRegion
             // 
+            this.txtBoxRegion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBoxRegion.Location = new System.Drawing.Point(381, 41);
             this.txtBoxRegion.Name = "txtBoxRegion";
             this.txtBoxRegion.Size = new System.Drawing.Size(75, 20);
@@ -105,11 +106,12 @@
             // 
             // txtBoxCountryName
             // 
+            this.txtBoxCountryName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBoxCountryName.Location = new System.Drawing.Point(8, 113);
             this.txtBoxCountryName.Name = "txtBoxCountryName";
             this.txtBoxCountryName.Size = new System.Drawing.Size(75, 20);
             this.txtBoxCountryName.TabIndex = 6;
-            this.txtBoxCountryName.Text = "Austria";
+            this.txtBoxCountryName.Text = "AUSTRIA";
             // 
             // grpBoxCountry
             // 
@@ -216,7 +218,7 @@
             this.txtBoxNewCountryName.Name = "txtBoxNewCountryName";
             this.txtBoxNewCountryName.Size = new System.Drawing.Size(100, 20);
             this.txtBoxNewCountryName.TabIndex = 9;
-            this.txtBoxNewCountryName.Text = "Zamunda";
+            this.txtBoxNewCountryName.Text = "ZAMUNDA";
             // 
             // txtBoxNewRegion
             // 
@@ -224,7 +226,7 @@
             this.txtBoxNewRegion.Name = "txtBoxNewRegion";
             this.txtBoxNewRegion.Size = new System.Drawing.Size(100, 20);
             this.txtBoxNewRegion.TabIndex = 10;
-            this.txtBoxNewRegion.Text = "Africa";
+            this.txtBoxNewRegion.Text = "AFRICA";
             // 
             // txtBoxNewNumberCode
             // 
@@ -264,7 +266,7 @@
             this.txtBoxNewCapital.Name = "txtBoxNewCapital";
             this.txtBoxNewCapital.Size = new System.Drawing.Size(100, 20);
             this.txtBoxNewCapital.TabIndex = 15;
-            this.txtBoxNewCapital.Text = "Zamunda City";
+            this.txtBoxNewCapital.Text = "ZAMUNDA CITY";
             // 
             // btnDeleteCountry
             // 

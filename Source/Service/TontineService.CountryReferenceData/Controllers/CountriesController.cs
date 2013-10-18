@@ -40,9 +40,21 @@ namespace TontineService.CountryReferenceData.Controllers
             
             TableQuery<Country> query =
                 new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey",
-                    QueryComparisons.Equal, countryName));
+                    QueryComparisons.Equal, countryName.ToUpper()));
 
-            return table.ExecuteQuery(query).FirstOrDefault();
+            var country = table.ExecuteQuery(query).FirstOrDefault();
+
+            if (country == null)
+            {
+                var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("No country with name = {0}", countryName)),
+                    ReasonPhrase = "Country Name Not Found"
+                };
+                throw new HttpResponseException(resp);
+            }
+
+            return country;
         }
 
         // POST api/countries
