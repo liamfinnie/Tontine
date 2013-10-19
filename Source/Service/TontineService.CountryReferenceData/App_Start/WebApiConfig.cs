@@ -2,6 +2,7 @@
 using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using TontineService.CountryReferenceData.Filters;
 using WebApiContrib.Formatting.Jsonp;
 
 namespace TontineService.CountryReferenceData
@@ -10,10 +11,10 @@ namespace TontineService.CountryReferenceData
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            config.Filters.Add(new UnhandledExceptionFilterAttribute());
+
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
 
-            // Web API routes
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{countryName}"
                 , new { countryName = RouteParameter.Optional }
             );

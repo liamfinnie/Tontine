@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
 using TontineService.CountryReferenceData.Models;
+using TontineService.CountryReferenceData.Repositories;
 
 namespace TontineService.CountryReferenceData.Controllers
 {
@@ -16,63 +13,27 @@ namespace TontineService.CountryReferenceData.Controllers
         // GET api/countries
         public IEnumerable<Country> Get()
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
-            CloudTable table = tableClient.GetTableReference("country");
-
-            var query = new TableQuery<Country>();
-            
-            return table.ExecuteQuery(query).ToList();
+            return CountryReferenceDataRepository.GetCountries();
         }
 
         // GET api/countries/Afghanistan
-        public Country Get(string countryName)
+        public HttpResponseMessage Get(string countryName)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            var country = CountryReferenceDataRepository.GetCountry(countryName);
 
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
-            CloudTable table = tableClient.GetTableReference("country");
+            if (country != null) return Request.CreateResponse(HttpStatusCode.OK, country);
             
-            TableQuery<Country> query =
-                new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey",
-                    QueryComparisons.Equal, countryName.ToUpper()));
-
-            var country = table.ExecuteQuery(query).FirstOrDefault();
-
-            if (country == null)
-            {
-                var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
-                {
-                    Content = new StringContent(string.Format("No country with name = {0}", countryName)),
-                    ReasonPhrase = "Country Name Not Found"
-                };
-                throw new HttpResponseException(resp);
-            }
-
-            return country;
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound
+                , string.Format("Country with name '{0}' Not Found.", countryName));
         }
 
         // POST api/countries
         public HttpResponseMessage Post([FromBody] Country country)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
-            CloudTable table = tableClient.GetTableReference("country");
-
-            TableOperation insertOperation = TableOperation.InsertOrMerge(country);
-
-            table.Execute(insertOperation);
+            CountryReferenceDataRepository.AddCountry(country);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, country);
-            string uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.RowKey);
+            var uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.RowKey);
             response.Headers.Location = new Uri(uri);
             return response;
         }
@@ -80,16 +41,7 @@ namespace TontineService.CountryReferenceData.Controllers
         // PUT api/countries/Afghanistan
         public HttpResponseMessage Put(string countryName, [FromBody] Country country)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
-            CloudTable table = tableClient.GetTableReference("country");
-
-            TableOperation insertOperation = TableOperation.InsertOrMerge(country);
-
-            table.Execute(insertOperation);
+            CountryReferenceDataRepository.UpdateCountry(country);
 
             return new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
         }
@@ -97,22 +49,7 @@ namespace TontineService.CountryReferenceData.Controllers
         // DELETE api/countries/Afghanistan
         public void Delete(string countryName)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-                CloudConfigurationManager.GetSetting("StorageConnectionString"));
-
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
-            CloudTable table = tableClient.GetTableReference("country");
-
-            var country = Get(countryName);
-            if (country != null)
-            {
-                country.ETag = "*";
-
-                TableOperation deleteOperation = TableOperation.Delete(country);
-
-                table.Execute(deleteOperation);
-            }
+            CountryReferenceDataRepository.DeleteCountry(countryName);
         }
     }
 }
