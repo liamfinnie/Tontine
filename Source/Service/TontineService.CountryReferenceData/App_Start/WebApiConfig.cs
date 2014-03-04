@@ -3,6 +3,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using TontineService.CountryReferenceData.Filters;
+using TontineService.CountryReferenceData.Formatters;
 using WebApiContrib.Formatting.Jsonp;
 
 namespace TontineService.CountryReferenceData
@@ -33,7 +34,10 @@ namespace TontineService.CountryReferenceData
                 // Insert the JSONP formatter in front of the standard JSON formatter.
                 var jsonpFormatter = new JsonpMediaTypeFormatter(formatters.JsonFormatter);
                 formatters.Insert(0, jsonpFormatter);
+
+                formatters.Add(new CountryImageFormatter());
             }
         }
+
     }
 }

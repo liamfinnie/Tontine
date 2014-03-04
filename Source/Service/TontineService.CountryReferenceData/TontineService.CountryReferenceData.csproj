@@ -112,6 +112,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Filters\UnhandledExceptionFilterAttribute.cs" />
+    <Compile Include="Formatters\CountryImageFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

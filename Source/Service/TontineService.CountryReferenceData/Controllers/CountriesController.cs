@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using TontineService.CountryReferenceData.Models;
 using TontineService.CountryReferenceData.Repositories;
@@ -21,7 +22,13 @@ namespace TontineService.CountryReferenceData.Controllers
         {
             var country = CountryReferenceDataRepository.GetCountry(countryName);
 
-            if (country != null) return Request.CreateResponse(HttpStatusCode.OK, country);
+            if (country != null)
+            {
+                if(Request.Headers.Accept.Contains(new MediaTypeWithQualityHeaderValue("image/png")))
+                    return Request.CreateResponse(HttpStatusCode.OK, country, new MediaTypeHeaderValue("image/png"));
+
+                return Request.CreateResponse(HttpStatusCode.OK, country);
+            }
             
             return Request.CreateErrorResponse(HttpStatusCode.NotFound
                 , string.Format("Country with name '{0}' Not Found.", countryName));
