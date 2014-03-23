@@ -17,8 +17,7 @@ namespace TontineService.CountryReferenceData
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
 
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{countryName}"
-                , new { countryName = RouteParameter.Optional }
-            );
+                , new { countryName = RouteParameter.Optional });
         }
 
         public class FormatterConfig
