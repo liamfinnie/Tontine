@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Text;
-using System.Web.Http.Filters;
+using System.Web.Http.ExceptionHandling;
 using NLog;
 
-namespace TontineService.CountryReferenceData.Filters
+namespace TontineService.CountryReferenceData.ExceptionHandling
 {
-    /// <summary>
-    /// Usage of this filter has been removed. A global error handling framework was introduced in WebApi 2.1
-    /// http://www.asp.net/web-api/overview/web-api-routing-and-actions/web-api-global-error-handling
-    /// </summary>
-    public class UnhandledExceptionFilterAttribute : ExceptionFilterAttribute
+    public class GenericExceptionLogger : ExceptionLogger
     {
-        public override void OnException(HttpActionExecutedContext actionExecutedContext)
+        public override void Log(ExceptionLoggerContext context)
         {
             Logger logger = LogManager.GetLogger("CountryRefDataService");
 
-            Exception currentException = actionExecutedContext.Exception;
+            Exception currentException = context.Exception;
             var consolidatedErrors = new StringBuilder();
 
             while (currentException != null)

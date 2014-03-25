@@ -1,8 +1,9 @@
 ﻿using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using TontineService.CountryReferenceData.Filters;
+using TontineService.CountryReferenceData.ExceptionHandling;
 using TontineService.CountryReferenceData.Formatters;
 using WebApiContrib.Formatting.Jsonp;
 
@@ -12,9 +13,11 @@ namespace TontineService.CountryReferenceData
     {
         public static void Register(HttpConfiguration config)
         {
-            config.Filters.Add(new UnhandledExceptionFilterAttribute());
+            config.Services.Replace(typeof(IExceptionHandler), new GenericTextExceptionHandler());
+            config.Services.Add(typeof(IExceptionLogger), new GenericExceptionLogger());
 
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
+            GlobalConfiguration.Configuration.AddJsonpFormatter();
 
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{countryName}"
                 , new { countryName = RouteParameter.Optional });
@@ -29,10 +32,6 @@ namespace TontineService.CountryReferenceData
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
-
-                // Insert the JSONP formatter in front of the standard JSON formatter.
-                var jsonpFormatter = new JsonpMediaTypeFormatter(formatters.JsonFormatter);
-                formatters.Insert(0, jsonpFormatter);
 
                 formatters.Add(new CountryImageFormatter());
             }

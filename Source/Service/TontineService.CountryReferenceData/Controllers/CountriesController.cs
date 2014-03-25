@@ -29,7 +29,7 @@ namespace TontineService.CountryReferenceData.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, country);
             }
-            
+
             return Request.CreateErrorResponse(HttpStatusCode.NotFound
                 , string.Format("Country with name '{0}' Not Found.", countryName));
         }
