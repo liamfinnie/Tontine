@@ -12,6 +12,11 @@ Accept: application/json
 Content-Type: application/json
 Content-Length: 162
 
+http://localhost:7475/api/countries/bermuda
+User-Agent: Fiddler
+Host: localhost:7475
+Accept: image/png
+
 
 PUT
 http://localhost:7475/api/countries/Zamunda
