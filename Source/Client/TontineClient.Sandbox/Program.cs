@@ -25,23 +25,4 @@ namespace TontineClient.Sandbox
         }
 
     }
-
-
-    class Shim
-    {
-        public event ShimDelegate thing = () => { };
-
-        public void DoWork()
-        {
-            //thing += Shim_thing;
-
-            //thing += delegate { Console.WriteLine("second"); };
-            
-            //thing += () => Console.WriteLine("third");
-
-            //thing += () => { };
-
-            thing.Invoke();
-        }
-    }
 }
