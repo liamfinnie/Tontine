@@ -7,10 +7,10 @@ namespace TontineService.CountryReferenceData.ExceptionHandling
 {
     public class GenericExceptionLogger : ExceptionLogger
     {
+        static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
+
         public override void Log(ExceptionLoggerContext context)
         {
-            Logger logger = LogManager.GetLogger("CountryRefDataService");
-
             Exception currentException = context.Exception;
             var consolidatedErrors = new StringBuilder();
 
@@ -29,7 +29,7 @@ namespace TontineService.CountryReferenceData.ExceptionHandling
                     break;
             }
 
-            logger.Error(consolidatedErrors);
+            Logger.Error(consolidatedErrors);
         }
     }
 }

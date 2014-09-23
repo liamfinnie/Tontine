@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using NLog;
 using TontineService.CountryReferenceData.Models;
 using TontineService.CountryReferenceData.Repositories;
 
@@ -11,6 +12,8 @@ namespace TontineService.CountryReferenceData.Controllers
 {
     public class CountriesController : ApiController
     {
+        static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
+        
         // GET api/countries
         public IEnumerable<Country> Get()
         {
@@ -30,8 +33,9 @@ namespace TontineService.CountryReferenceData.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, country);
             }
 
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound
-                , string.Format("Country with name '{0}' Not Found.", countryName));
+            var notFoundMessage = string.Format("A country with name '{0}' was not found.", countryName);
+            Logger.Info(notFoundMessage);
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound , notFoundMessage);
         }
 
         // POST api/countries
