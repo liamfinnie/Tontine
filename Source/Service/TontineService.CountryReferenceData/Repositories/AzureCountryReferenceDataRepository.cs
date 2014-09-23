@@ -1,13 +1,52 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.WindowsAzure;
+﻿using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
+using System.Collections.Generic;
+using System.Linq;
 using TontineService.CountryReferenceData.Models;
 
 namespace TontineService.CountryReferenceData.Repositories
 {
-    public sealed class CountryReferenceDataRepository
+    //public sealed class CountryTableEntity : TableEntity
+    //{
+    //    public int NumberCode { get; set; }
+
+    //    public string Alpha2Code { get; set; }
+
+    //    public string Alpha3Code { get; set; }
+
+    //    public string Capital { get; set; }
+
+    //    public string CurrencyAlpha3Code { get; set; }
+
+    //    public Byte[] Flag { get; set; }
+
+    //    public CountryTableEntity(string region, string countryName)
+    //    {
+    //        PartitionKey = region;
+    //        RowKey = countryName;
+    //    }
+
+    //    public CountryTableEntity()
+    //    {
+
+    //    }
+
+    //    public Country MapCountry()
+    //    {
+    //        return new Country
+    //        {
+    //            Alpha2Code = Alpha2Code,
+    //            Alpha3Code = Alpha3Code,
+    //            Capital = Capital,
+    //            Flag = Flag,
+    //            CurrencyAlpha3Code = CurrencyAlpha3Code,
+    //            NumberCode = NumberCode
+    //        };
+    //    }
+    //}
+
+    public sealed class AzureCountryReferenceDataRepository : ICountryReferenceDataRepository
     {
         private static CloudTable GetCountriesTable()
         {
@@ -21,7 +60,7 @@ namespace TontineService.CountryReferenceData.Repositories
             return table;
         }
 
-        public static Country GetCountry(string countryName)
+        public Country GetCountry(string countryName)
         {
             var table = GetCountriesTable();
 
@@ -34,7 +73,7 @@ namespace TontineService.CountryReferenceData.Repositories
             return country;
         }
 
-        public static IEnumerable<Country> GetCountries()
+        public IEnumerable<Country> GetCountries()
         {
             var table = GetCountriesTable();
 
@@ -43,7 +82,7 @@ namespace TontineService.CountryReferenceData.Repositories
             return table.ExecuteQuery(query).ToList();
         }
 
-        public static void AddCountry(Country country)
+        public void AddCountry(Country country)
         {
             var table = GetCountriesTable();
 
@@ -52,7 +91,7 @@ namespace TontineService.CountryReferenceData.Repositories
             table.Execute(insertOperation);
         }
 
-        public static void UpdateCountry(Country country)
+        public void UpdateCountry(Country country)
         {
             var table = GetCountriesTable();
 
@@ -61,7 +100,7 @@ namespace TontineService.CountryReferenceData.Repositories
             table.Execute(insertOperation);
         }
 
-        public static void DeleteCountry(string countryName)
+        public void DeleteCountry(string countryName)
         {
             var table = GetCountriesTable();
 

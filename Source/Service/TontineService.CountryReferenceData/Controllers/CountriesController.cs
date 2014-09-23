@@ -12,18 +12,24 @@ namespace TontineService.CountryReferenceData.Controllers
 {
     public class CountriesController : ApiController
     {
+        private readonly ICountryReferenceDataRepository _repository;
         static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
-        
+
+        public CountriesController(ICountryReferenceDataRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET api/countries
         public IEnumerable<Country> Get()
         {
-            return CountryReferenceDataRepository.GetCountries();
+            return _repository.GetCountries();
         }
 
         // GET api/countries/Afghanistan
         public HttpResponseMessage Get(string countryName)
         {
-            var country = CountryReferenceDataRepository.GetCountry(countryName);
+            var country = _repository.GetCountry(countryName);
 
             if (country != null)
             {
@@ -41,7 +47,7 @@ namespace TontineService.CountryReferenceData.Controllers
         // POST api/countries
         public HttpResponseMessage Post([FromBody] Country country)
         {
-            CountryReferenceDataRepository.AddCountry(country);
+            _repository.AddCountry(country);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, country);
             var uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.RowKey);
@@ -52,7 +58,7 @@ namespace TontineService.CountryReferenceData.Controllers
         // PUT api/countries/Afghanistan
         public HttpResponseMessage Put(string countryName, [FromBody] Country country)
         {
-            CountryReferenceDataRepository.UpdateCountry(country);
+            _repository.UpdateCountry(country);
 
             return new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
         }
@@ -60,7 +66,7 @@ namespace TontineService.CountryReferenceData.Controllers
         // DELETE api/countries/Afghanistan
         public void Delete(string countryName)
         {
-            CountryReferenceDataRepository.DeleteCountry(countryName);
+            _repository.DeleteCountry(countryName);
         }
     }
 }

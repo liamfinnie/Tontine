@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Routing;
+﻿using System.Web.Http;
+using Ninject;
+using TontineService.CountryReferenceData.Repositories;
+using WebApiContrib.IoC.Ninject;
 
 namespace TontineService.CountryReferenceData
 {
-    // Note: For instructions on enabling IIS7 classic mode, 
-    // visit http://go.microsoft.com/fwlink/?LinkId=301868
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            WebApiConfig.Register(GlobalConfiguration.Configuration);           
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+
+            var kernal = new StandardKernel();
+            kernal.Bind<ICountryReferenceDataRepository>().To<AzureCountryReferenceDataRepository>();
+            var dependencyResolver = new NinjectResolver(kernal);
+            GlobalConfiguration.Configuration.DependencyResolver = dependencyResolver;
         }
     }
 }
