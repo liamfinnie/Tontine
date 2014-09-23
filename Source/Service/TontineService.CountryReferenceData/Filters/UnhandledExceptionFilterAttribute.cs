@@ -9,6 +9,7 @@ namespace TontineService.CountryReferenceData.Filters
     /// Usage of this filter has been removed. A global error handling framework was introduced in WebApi 2.1
     /// http://www.asp.net/web-api/overview/web-api-routing-and-actions/web-api-global-error-handling
     /// </summary>
+    [Obsolete]
     public class UnhandledExceptionFilterAttribute : ExceptionFilterAttribute
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
