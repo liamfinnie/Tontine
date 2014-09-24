@@ -1,10 +1,10 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using NLog;
 using TontineService.CountryReferenceData.Models;
 using TontineService.CountryReferenceData.Repositories;
 
