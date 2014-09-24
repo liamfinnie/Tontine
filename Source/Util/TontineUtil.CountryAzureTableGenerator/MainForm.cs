@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using TontineService.CountryReferenceData.Models;
+using TontineService.CountryReferenceData.Repositories;
 
 namespace TontineUtil.CountryAzureTableGenerator
 {
@@ -36,8 +36,10 @@ namespace TontineUtil.CountryAzureTableGenerator
                 {
                     columns = country.Split('\t');
 
-                    var countryEntity1 = new Country(columns[6], columns[3])
+                    var countryEntity1 = new CountryTableEntity
                     {
+                        RowKey = columns[3],
+                        PartitionKey = columns[6],
                         NumberCode = int.Parse(columns[0]),
                         Alpha2Code = columns[1],
                         Alpha3Code = columns[2],
@@ -86,15 +88,15 @@ namespace TontineUtil.CountryAzureTableGenerator
 
             CloudTable table = tableClient.GetTableReference("country");
 
-            TableQuery<Country> query =
-                new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
+            TableQuery<CountryTableEntity> query =
+                new TableQuery<CountryTableEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
                     txtBoxRegion.Text));
 
-            foreach (Country entity in table.ExecuteQuery(query))
+            foreach (CountryTableEntity entity in table.ExecuteQuery(query))
             {
                 if (InvokeRequired)
                 {
-                    Country country = entity;
+                    CountryTableEntity country = entity;
                     BeginInvoke((MethodInvoker) (() => listBoxCountriesInRegion.Items.Add(country.RowKey)));
                 }
                 else
@@ -125,8 +127,8 @@ namespace TontineUtil.CountryAzureTableGenerator
 
             CloudTable table = tableClient.GetTableReference("country");
 
-            TableQuery<Country> query =
-                new TableQuery<Country>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal,
+            TableQuery<CountryTableEntity> query =
+                new TableQuery<CountryTableEntity>().Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal,
                     txtBoxCountryName.Text));
 
             var country = table.ExecuteQuery(query).FirstOrDefault();
@@ -155,7 +157,7 @@ namespace TontineUtil.CountryAzureTableGenerator
             
             try
             {
-                var country = new Country
+                var country = new CountryTableEntity
                 {
                     RowKey = txtBoxNewCountryName.Text,
                     PartitionKey = txtBoxNewRegion.Text,
@@ -194,7 +196,7 @@ namespace TontineUtil.CountryAzureTableGenerator
 
             try
             {
-                var country = new Country
+                var country = new CountryTableEntity
                 {
                     RowKey = txtBoxDeleteCountryName.Text,
                     PartitionKey = txtBoxDeleteRegion.Text,

@@ -13,7 +13,7 @@ namespace TontineService.CountryReferenceData.Controllers
     public class CountriesController : ApiController
     {
         private readonly ICountryReferenceDataRepository _repository;
-        static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
+        private static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
 
         public CountriesController(ICountryReferenceDataRepository repository)
         {
@@ -50,7 +50,7 @@ namespace TontineService.CountryReferenceData.Controllers
             _repository.AddCountry(country);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, country);
-            var uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.RowKey);
+            var uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.CountryName);
             response.Headers.Location = new Uri(uri);
             return response;
         }

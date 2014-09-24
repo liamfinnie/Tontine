@@ -1,10 +1,13 @@
 ﻿using System;
-using Microsoft.WindowsAzure.Storage.Table;
 
 namespace TontineService.CountryReferenceData.Models
 {
-    public class Country : TableEntity
+    public class Country
     {
+        public string CountryName { get; set; }
+
+        public string Region { get; set; }
+
         public int NumberCode { get; set; }
 
         public string Alpha2Code { get; set; }
@@ -16,16 +19,5 @@ namespace TontineService.CountryReferenceData.Models
         public string CurrencyAlpha3Code { get; set; }
 
         public Byte[] Flag { get; set; }
-
-        public Country(string region, string countryName)
-        {
-            PartitionKey = region;
-            RowKey = countryName;
-        }
-
-        public Country()
-        {
-
-        }
     }
 }
