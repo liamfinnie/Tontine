@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 
-namespace TontineService.CountryReferenceData.ExceptionHandling
+namespace TontineService.ReferenceData.ExceptionHandling
 {
     public class GenericTextExceptionHandler : ExceptionHandler
     {

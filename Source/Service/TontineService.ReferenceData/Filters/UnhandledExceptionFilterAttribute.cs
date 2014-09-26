@@ -3,7 +3,7 @@ using System.Text;
 using System.Web.Http.Filters;
 using NLog;
 
-namespace TontineService.CountryReferenceData.Filters
+namespace TontineService.ReferenceData.Filters
 {
     /// <summary>
     /// Usage of this filter has been removed. A global error handling framework was introduced in WebApi 2.1

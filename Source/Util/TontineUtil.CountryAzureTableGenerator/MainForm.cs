@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using TontineService.CountryReferenceData.Repositories;
+using TontineService.ReferenceData.Repositories;
 
 namespace TontineUtil.CountryAzureTableGenerator
 {

@@ -1,13 +1,13 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TontineService.CountryReferenceData.Models;
+using TontineService.ReferenceData.Models;
 
-namespace TontineService.CountryReferenceData.Repositories
+namespace TontineService.ReferenceData.Repositories
 {
     public sealed class CountryTableEntity : TableEntity
     {

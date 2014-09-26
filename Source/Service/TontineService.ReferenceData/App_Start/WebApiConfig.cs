@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Ninject;
-using System.Net.Http.Formatting;
+﻿using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
-using TontineService.CountryReferenceData.ExceptionHandling;
-using TontineService.CountryReferenceData.Formatters;
-using TontineService.CountryReferenceData.Repositories;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Ninject;
+using TontineService.ReferenceData.ExceptionHandling;
+using TontineService.ReferenceData.Formatters;
+using TontineService.ReferenceData.Repositories;
 using WebApiContrib.Formatting.Jsonp;
 using WebApiContrib.IoC.Ninject;
 
-namespace TontineService.CountryReferenceData
+namespace TontineService.ReferenceData
 {
     public static class WebApiConfig
     {

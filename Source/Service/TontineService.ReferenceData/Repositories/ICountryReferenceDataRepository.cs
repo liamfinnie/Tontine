@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using TontineService.CountryReferenceData.Models;
+using TontineService.ReferenceData.Models;
 
-namespace TontineService.CountryReferenceData.Repositories
+namespace TontineService.ReferenceData.Repositories
 {
     public interface ICountryReferenceDataRepository
     {

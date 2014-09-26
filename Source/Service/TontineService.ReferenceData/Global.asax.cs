@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace TontineService.CountryReferenceData
+namespace TontineService.ReferenceData
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

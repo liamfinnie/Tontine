@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TontineService.CountryReferenceData.Models
+namespace TontineService.ReferenceData.Models
 {
     public class Country
     {

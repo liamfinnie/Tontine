@@ -3,7 +3,7 @@ using System.Text;
 using System.Web.Http.ExceptionHandling;
 using NLog;
 
-namespace TontineService.CountryReferenceData.ExceptionHandling
+namespace TontineService.ReferenceData.ExceptionHandling
 {
     public class GenericExceptionLogger : ExceptionLogger
     {

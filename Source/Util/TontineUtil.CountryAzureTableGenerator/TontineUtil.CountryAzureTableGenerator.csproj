@@ -109,12 +109,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Service\TontineService.CountryReferenceData\TontineService.CountryReferenceData.csproj">
+    <ProjectReference Include="..\..\Service\TontineService.ReferenceData\TontineService.ReferenceData.csproj">
       <Project>{5391d47d-f3f7-4cbe-b4d5-8015bd6edfcf}</Project>
-      <Name>TontineService.CountryReferenceData</Name>
+      <Name>TontineService.ReferenceData</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\countries.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

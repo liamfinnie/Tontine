@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using TontineService.CountryReferenceData.Models;
+using TontineService.ReferenceData.Models;
 
-namespace TontineService.CountryReferenceData.Formatters
+namespace TontineService.ReferenceData.Formatters
 {
     public class CountryImageFormatter : MediaTypeFormatter
     {

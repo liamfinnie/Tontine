@@ -1,14 +1,14 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using TontineService.CountryReferenceData.Models;
-using TontineService.CountryReferenceData.Repositories;
+using NLog;
+using TontineService.ReferenceData.Models;
+using TontineService.ReferenceData.Repositories;
 
-namespace TontineService.CountryReferenceData.Controllers
+namespace TontineService.ReferenceData.Controllers
 {
     public class CountriesController : ApiController
     {
