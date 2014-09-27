@@ -157,7 +157,9 @@
     <Compile Include="Models\Currency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AzureCountryReferenceDataRepository.cs" />
+    <Compile Include="Repositories\FlatFileCurrencyReferenceDataRepository.cs" />
     <Compile Include="Repositories\ICountryReferenceDataRepository.cs" />
+    <Compile Include="Repositories\ICurrencyReferenceDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -169,6 +171,9 @@
     </None>
     <None Include="Properties\PublishProfiles\sapience %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\sapience.pubxml" />
+    <Content Include="Resources\iso_4217_currencies.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

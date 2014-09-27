@@ -7,7 +7,7 @@ namespace TontineService.ReferenceData.ExceptionHandling
 {
     public class GenericExceptionLogger : ExceptionLogger
     {
-        static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
+        static readonly Logger Logger = LogManager.GetLogger("RefDataService");
 
         public override void Log(ExceptionLoggerContext context)
         {

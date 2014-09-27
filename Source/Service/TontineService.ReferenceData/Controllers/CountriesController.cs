@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NLog;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using NLog;
 using TontineService.ReferenceData.Models;
 using TontineService.ReferenceData.Repositories;
 
@@ -21,9 +20,9 @@ namespace TontineService.ReferenceData.Controllers
         }
 
         [Route("api/countries")]
-        public IEnumerable<Country> Get()
+        public HttpResponseMessage Get()
         {
-            return _repository.GetCountries();
+            return Request.CreateResponse(HttpStatusCode.OK, _repository.GetCountries());
         }
 
         [Route("api/countries/{countryName}")]
