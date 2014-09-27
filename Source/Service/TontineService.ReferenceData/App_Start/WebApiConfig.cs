@@ -19,12 +19,11 @@ namespace TontineService.ReferenceData
             config.Services.Replace(typeof(IExceptionHandler), new GenericTextExceptionHandler());
             config.Services.Add(typeof(IExceptionLogger), new GenericExceptionLogger());
 
+            config.MapHttpAttributeRoutes();
+
             FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
             GlobalConfiguration.Configuration.AddJsonpFormatter();
-
-            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{countryName}"
-                , new { countryName = RouteParameter.Optional });
-
+         
             var kernal = new StandardKernel();
             kernal.Bind<ICountryReferenceDataRepository>().To<AzureCountryReferenceDataRepository>();
             var dependencyResolver = new NinjectResolver(kernal);

@@ -20,13 +20,13 @@ namespace TontineService.ReferenceData.Controllers
             _repository = repository;
         }
 
-        // GET api/countries
+        [Route("api/countries")]
         public IEnumerable<Country> Get()
         {
             return _repository.GetCountries();
         }
 
-        // GET api/countries/Afghanistan
+        [Route("api/countries/{countryName}")]
         public HttpResponseMessage Get(string countryName)
         {
             var country = _repository.GetCountry(countryName);
