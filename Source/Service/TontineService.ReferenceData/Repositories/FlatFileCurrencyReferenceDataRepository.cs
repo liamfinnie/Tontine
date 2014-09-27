@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TontineService.ReferenceData.Models;
@@ -17,13 +18,18 @@ namespace TontineService.ReferenceData.Repositories
 
             foreach (var properties in rawCurrencies.Select(rawCurrency => rawCurrency.Split(',')))
             {
-                _currencies.Add(new Currency
+                var currency = new Currency
                 {
                     CurrencyName = properties[0],
                     CurrencyChar3Code = properties[1],
-                    CurrencyNumberCode = properties[2],
-                    NumberOfDigits = properties[3]
-                });
+                    CurrencyNumberCode = Int32.Parse(properties[2]),
+                };
+
+                int result;
+                if(Int32.TryParse(properties[3], out result))
+                    currency.NumberOfDigits = result; 
+                
+                _currencies.Add(currency);
             }
         }
 

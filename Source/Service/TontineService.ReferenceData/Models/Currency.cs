@@ -6,8 +6,8 @@
 
         public string CurrencyChar3Code { get; set; }
 
-        public string CurrencyNumberCode { get; set; }
+        public int CurrencyNumberCode { get; set; }
 
-        public string NumberOfDigits { get; set; }
+        public int? NumberOfDigits { get; set; }
     }
 }
