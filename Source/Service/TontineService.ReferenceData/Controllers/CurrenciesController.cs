@@ -1,7 +1,9 @@
-﻿using NLog;
+﻿using System;
+using NLog;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TontineService.ReferenceData.Models;
 using TontineService.ReferenceData.Repositories;
 
 namespace TontineService.ReferenceData.Controllers
@@ -9,7 +11,7 @@ namespace TontineService.ReferenceData.Controllers
     public class CurrenciesController : ApiController
     {
         private readonly ICurrencyReferenceDataRepository _repository;
-        private static readonly Logger Logger = LogManager.GetLogger("CurrencyRefDataService");
+        private static readonly Logger _logger = LogManager.GetLogger("CurrencyRefDataService");
 
         public CurrenciesController(ICurrencyReferenceDataRepository repository)
         {
@@ -22,7 +24,7 @@ namespace TontineService.ReferenceData.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repository.GetCurrencies());
         }
 
-        [Route("api/currencies/{currencyCode}")]
+        [Route("api/currencies/{currencyCode}", Name = "GetCurrencyByCode")]
         public HttpResponseMessage Get(string currencyCode)
         {
             var currency = _repository.GetCurrency(currencyCode);
@@ -31,13 +33,20 @@ namespace TontineService.ReferenceData.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, currency);
 
             var notFoundMessage = string.Format("A currency with code '{0}' was not found.", currencyCode);
-            Logger.Info(notFoundMessage);
+            _logger.Info(notFoundMessage);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, notFoundMessage);
         }
 
         // POST: api/Currencies
-        public void Post([FromBody]string value)
+        [Route("api/currencies")]
+        public HttpResponseMessage Post([FromBody] Currency currency)
         {
+            _repository.AddCurrency(currency);
+
+            var response = Request.CreateResponse(HttpStatusCode.Created, currency);
+            var uri = Url.Link("GetCurrencyByCode", new {currencyCode = currency.CurrencyChar3Code});
+            response.Headers.Location = new Uri(uri);
+            return response;
         }
 
         // PUT: api/Currencies/5

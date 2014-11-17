@@ -1,13 +1,3 @@
-Move configuration for connection strings
-IIS 8.0
-Composite Key for trade table
-Expose WCF services as REST
-
---Create Data Layer using EF
-
--- Static method on an interface.
-
-
 <tontineTrade>
             <tontineHeader>
                         <source_system>MVC</source_system>

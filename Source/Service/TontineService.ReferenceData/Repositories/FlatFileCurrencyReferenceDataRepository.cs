@@ -8,13 +8,15 @@ namespace TontineService.ReferenceData.Repositories
 {
     public class FlatFileCurrencyReferenceDataRepository : ICurrencyReferenceDataRepository
     {
+        private readonly string _fileName;
         readonly List<Currency> _currencies = new List<Currency>();
 
         public FlatFileCurrencyReferenceDataRepository(string fileName)
         {
+            _fileName = fileName;
             _currencies = new List<Currency>();
 
-            string[] rawCurrencies = File.ReadAllLines(fileName);
+            string[] rawCurrencies = File.ReadAllLines(_fileName);
 
             foreach (var properties in rawCurrencies.Select(rawCurrency => rawCurrency.Split(',')))
             {
@@ -45,7 +47,16 @@ namespace TontineService.ReferenceData.Repositories
 
         public void AddCurrency(Currency currency)
         {
-            
+            File.AppendAllText(_fileName,
+               string.Format("{4}{0},{1},{2},{3}",
+                    currency.CurrencyName
+                    , currency.CurrencyChar3Code
+                    , currency.CurrencyNumberCode
+                    , currency.NumberOfDigits
+                    , Environment.NewLine)
+                );
+
+            _currencies.Add(currency);
         }
 
         public void UpdateCurrency(Currency currency)

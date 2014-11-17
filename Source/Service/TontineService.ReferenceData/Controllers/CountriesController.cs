@@ -12,7 +12,7 @@ namespace TontineService.ReferenceData.Controllers
     public class CountriesController : ApiController
     {
         private readonly ICountryReferenceDataRepository _repository;
-        private static readonly Logger Logger = LogManager.GetLogger("CountryRefDataService");
+        private static readonly Logger _logger = LogManager.GetLogger("CountryRefDataService");
 
         public CountriesController(ICountryReferenceDataRepository repository)
         {
@@ -39,7 +39,7 @@ namespace TontineService.ReferenceData.Controllers
             }
 
             var notFoundMessage = string.Format("A country with name '{0}' was not found.", countryName);
-            Logger.Info(notFoundMessage);
+            _logger.Info(notFoundMessage);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound , notFoundMessage);
         }
 
