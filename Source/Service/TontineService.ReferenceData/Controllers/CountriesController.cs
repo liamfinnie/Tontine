@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using System.Collections.Generic;
+using NLog;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -25,7 +26,7 @@ namespace TontineService.ReferenceData.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repository.GetCountries());
         }
 
-        [Route("api/countries/{countryName}")]
+        [Route("api/countries/{countryName}", Name="GetCountryByName")]
         public HttpResponseMessage Get(string countryName)
         {
             var country = _repository.GetCountry(countryName);
@@ -49,7 +50,7 @@ namespace TontineService.ReferenceData.Controllers
             _repository.AddCountry(country);
 
             var response = Request.CreateResponse(HttpStatusCode.Created, country);
-            var uri = string.Format("{0}/{1}", Url.Link("DefaultApi", null), country.CountryName);
+            var uri = Url.Link("GetCountryByName", new {countryName = country.CountryName});
             response.Headers.Location = new Uri(uri);
             return response;
         }
