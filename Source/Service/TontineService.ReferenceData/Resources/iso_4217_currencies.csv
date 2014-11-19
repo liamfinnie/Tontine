@@ -162,20 +162,20 @@ Unidades de fomento,CLF,990,0
 US Dollar (Next Day),USN,997,2
 US Dollar (Same Day),USS,998,2
 The codes assigned for transactions where no currency is involved are:,XXX,999,
-Lek,ALL,008,2
-Algerian Dinar,DZD,012,2
-Argentine Peso,ARS,032,2
-Australian Dollar,AUD,036,2
-Bahamian Dollar,BSD,044,2
-Bahraini Dinar,BHD,048,3
-Taka,BDT,050,2
-Armenian Dram,AMD,051,2
-Barbados Dollar,BBD,052,2
-Bermudian Dollar,BMD,060,2
-Ngultrum,BTN,064,2
-Boliviano,BOB,068,2
-Pula,BWP,072,2
-Belize Dollar,BZD,084,2
-Solomon Islands Dollar,SBD,090,2
-Brunei Dollar,BND,096,2
+Lek,ALL,8,2
+Algerian Dinar,DZD,12,2
+Argentine Peso,ARS,32,2
+Australian Dollar,AUD,36,2
+Bahamian Dollar,BSD,44,2
+Bahraini Dinar,BHD,48,3
+Taka,BDT,50,2
+Armenian Dram,AMD,51,2
+Barbados Dollar,BBD,52,2
+Bermudian Dollar,BMD,60,2
+Ngultrum,BTN,64,2
+Boliviano,BOB,68,2
+Pula,BWP,72,2
+Belize Dollar,BZD,84,2
+Solomon Islands Dollar,SBD,90,2
+Brunei Dollar,BND,96,2
 Zamundan Shilling,ZSH,675,2

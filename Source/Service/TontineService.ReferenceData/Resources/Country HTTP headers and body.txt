@@ -26,6 +26,17 @@ Accept: image/png
 PUT
 http://localhost:7475/api/countries/Zamunda
 
+PUT
+http://localhost:7475/api/currencies/ZSH
+User-Agent: Fiddler
+Host: localhost:7475
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Content-Type: application/json
+Content-Length: 106
+
+{"currencyName":"Zamundan Shilling","currencyChar3Code":"ZSH","currencyNumberCode":670,"numberOfDigits":2}
+
+
 DELETE
 http://localhost:7475/api/countries/Zamunda
 DELETE http://localhost:7475/api/countries/Zamunda HTTP/1.1

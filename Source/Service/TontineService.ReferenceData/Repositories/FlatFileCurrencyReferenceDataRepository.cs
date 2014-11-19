@@ -40,33 +40,37 @@ namespace TontineService.ReferenceData.Repositories
             return _currencies;
         }
 
-        public Currency GetCurrency(string currencyCode)
+        public Currency GetCurrency(string currencyChar3Code)
         {
-            return _currencies.Find(curr => curr.CurrencyChar3Code == currencyCode.ToUpper());
+            return _currencies.Find(c => c.CurrencyChar3Code == currencyChar3Code.ToUpper());
         }
 
         public void AddCurrency(Currency currency)
         {
-            File.AppendAllText(_fileName,
-               string.Format("{4}{0},{1},{2},{3}",
-                    currency.CurrencyName
-                    , currency.CurrencyChar3Code
-                    , currency.CurrencyNumberCode
-                    , currency.NumberOfDigits
-                    , Environment.NewLine)
-                );
-
             _currencies.Add(currency);
+            Persist();
         }
 
         public void UpdateCurrency(Currency currency)
         {
+            var targetCurrency = _currencies.Find(c => c.CurrencyChar3Code == currency.CurrencyChar3Code.ToUpper());
+            _currencies.Remove(targetCurrency);
             
+            _currencies.Add(currency);
+            Persist();
         }
 
-        public void DeleteCurrency(string currencyCode)
+        public void DeleteCurrency(string currencyChar3Code)
         {
-            
+            var targetCurrency = _currencies.Find(c => c.CurrencyChar3Code == currencyChar3Code.ToUpper());
+            _currencies.Remove(targetCurrency);
+            Persist();
         }
+
+        private void Persist()
+        {
+            File.WriteAllLines(_fileName, _currencies.Select(c => c.ToString()).ToList());
+        }
+
     }
 }

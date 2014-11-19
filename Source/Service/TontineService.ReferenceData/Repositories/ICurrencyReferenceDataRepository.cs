@@ -7,7 +7,7 @@ namespace TontineService.ReferenceData.Repositories
     {
         IEnumerable<Currency> GetCurrencies();
         
-        Currency GetCurrency(string currencyCode);
+        Currency GetCurrency(string CurrencyChar3Code);
         
         void AddCurrency(Currency currency);
         
