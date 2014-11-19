@@ -43,7 +43,7 @@ namespace TontineService.ReferenceData.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound , notFoundMessage);
         }
 
-        // POST api/countries
+        [Route("api/countries")]
         public HttpResponseMessage Post([FromBody] Country country)
         {
             _repository.AddCountry(country);
@@ -54,7 +54,7 @@ namespace TontineService.ReferenceData.Controllers
             return response;
         }
 
-        // PUT api/countries/Afghanistan
+        [Route("api/countries/{countryName}")]
         public HttpResponseMessage Put(string countryName, [FromBody] Country country)
         {
             _repository.UpdateCountry(country);
@@ -62,7 +62,7 @@ namespace TontineService.ReferenceData.Controllers
             return new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
         }
 
-        // DELETE api/countries/Afghanistan
+        [Route("api/countries/{countryName}")]
         public void Delete(string countryName)
         {
             _repository.DeleteCountry(countryName);
