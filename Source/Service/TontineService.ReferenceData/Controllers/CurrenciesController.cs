@@ -24,7 +24,7 @@ namespace TontineService.ReferenceData.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repository.GetCurrencies());
         }
 
-        [Route("api/currencies/{currencyCode}", Name="GetCurrencyByCode")]
+        [Route("api/currencies/{currencyCode:length(3)}", Name="GetCurrencyByCode")]
         public HttpResponseMessage Get(string currencyCode)
         {
             var currency = _repository.GetCurrency(currencyCode);
