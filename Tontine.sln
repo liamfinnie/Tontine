@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{BDA869ED-D2C2-4F00-A50B-FA2EA1FC7605}"
 EndProject
@@ -43,6 +43,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontineUtil.CountryAzureTableGenerator", "Source\Util\TontineUtil.CountryAzureTableGenerator\TontineUtil.CountryAzureTableGenerator.csproj", "{76C0AD89-5329-4CA5-9C85-F6A2DA1D3E04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontineService.ReferenceData", "Source\Service\TontineService.ReferenceData\TontineService.ReferenceData.csproj", "{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TontoneUtil.MICRavenDBGenerator", "Source\Util\TontoneUtil.MICRavenDBGenerator\TontoneUtil.MICRavenDBGenerator.csproj", "{CE20C176-AC75-45B4-91DC-91CF1ECB62F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,10 @@ Global
 		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE20C176-AC75-45B4-91DC-91CF1ECB62F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE20C176-AC75-45B4-91DC-91CF1ECB62F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE20C176-AC75-45B4-91DC-91CF1ECB62F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE20C176-AC75-45B4-91DC-91CF1ECB62F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,5 +116,6 @@ Global
 		{911DA11F-58B5-44E9-9F18-2635AB0D6768} = {11DC1673-E430-476A-9BBC-AD99C921AD3B}
 		{76C0AD89-5329-4CA5-9C85-F6A2DA1D3E04} = {630E4E92-DD37-4815-B117-7A191F91AE39}
 		{5391D47D-F3F7-4CBE-B4D5-8015BD6EDFCF} = {BDA869ED-D2C2-4F00-A50B-FA2EA1FC7605}
+		{CE20C176-AC75-45B4-91DC-91CF1ECB62F8} = {630E4E92-DD37-4815-B117-7A191F91AE39}
 	EndGlobalSection
 EndGlobal

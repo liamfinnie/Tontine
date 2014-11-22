@@ -48,7 +48,7 @@ namespace TontineService.ReferenceData.Controllers
             return response;
         }
 
-        [Route("api/currencies/{currencyCode}")]
+        [Route("api/currencies/{currencyCode:length(3)}")]
         public HttpResponseMessage Put(string currencyCode, [FromBody] Currency currency)
         {
             _repository.UpdateCurrency(currency);
@@ -56,7 +56,7 @@ namespace TontineService.ReferenceData.Controllers
             return new HttpResponseMessage {StatusCode = HttpStatusCode.OK};
         }
 
-        [Route("api/currencies/{currencyCode}")]
+        [Route("api/currencies/{currencyCode:length(3)}")]
         public void Delete(string currencyCode)
         {
             _repository.DeleteCurrency(currencyCode);
