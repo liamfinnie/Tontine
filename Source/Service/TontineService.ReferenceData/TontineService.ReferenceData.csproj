@@ -142,7 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Resources\Country HTTP headers and body.txt" />
+    <Content Include="Resources\HTTP headers and body.txt" />
     <Content Include="Resources\javascript country ref service calls.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
